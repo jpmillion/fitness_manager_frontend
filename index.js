@@ -7,10 +7,17 @@ function getWorkouts() {
     .then(resp => resp.json())
     .then(workouts => {
         const body = document.querySelector('body');
+        const div = document.createElement('div');
+        const ol = document.createElement('ol');
         workouts.data.forEach(workout => {
-            const div = document.createElement('div');
             div.innerText = workout.attributes.name;
             body.appendChild(div);
+        });
+        workouts.included.forEach(exercise => {
+            const li = document.createElement('li');
+            li.innerText = exercise.attributes.name;
+            ol.appendChild(li);
+            div.appendChild(ol);
         });
     });
 }
