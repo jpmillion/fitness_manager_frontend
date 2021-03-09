@@ -39,12 +39,14 @@ const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
 fetch(exerciseEndPoint)
     .then(resp => resp.json())
     .then(obj => {
-        const body = document.querySelector('body');
         obj.included.forEach(element => {
-            const div = document.createElement('div');
+            const categoryDiv = document.getElementById('categories');
+            const workoutDiv = document.getElementById('workouts');
             const ul = document.createElement('ul');
             if (element.type === 'category') {
                 const {name, description} = element.attributes;
+                const div = document.createElement('div');
+                div.classList.add('col');
                 div.id = name;
                 div.innerHTML = `${name} <div>${description}</div>`;
                 element.relationships.exercises.data.forEach(catEx => {
@@ -53,7 +55,11 @@ fetch(exerciseEndPoint)
                     li.innerText = exercise.attributes.name + '      ' + exercise.attributes.video_url;
                     ul.appendChild(li);
                 })
+                div.appendChild(ul);
+                categoryDiv.appendChild(div);
             } else {
+                const div = document.createElement('div');
+                div.classList.add('col-md-auto');
                 div.innerText = element.attributes.name;
                 element.relationships.exercises.data.forEach(woEx => {
                     const exercise = obj.data.find(ex => woEx.id === ex.id);
@@ -61,9 +67,9 @@ fetch(exerciseEndPoint)
                     li.innerText = exercise.attributes.name + '      ' + exercise.attributes.video_url;
                     ul.appendChild(li);
                 })
+                div.appendChild(ul);
+                workoutDiv.appendChild(div);
             }
-            div.appendChild(ul);
-            body.appendChild(div);
         });
 
         
