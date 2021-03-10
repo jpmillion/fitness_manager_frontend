@@ -98,7 +98,32 @@ fetch(exerciseEndPoint)
                 div.appendChild(ul);
                 workoutDiv.appendChild(div);
             }
-        });
+        });   
+    })
 
-        
+    const button = document.getElementById('createWorkout');
+    button.addEventListener('click', () => {
+        const p = document.getElementById('workoutForm');
+        if (p.childElementCount) {
+            button.innerText = 'Create a Workout';
+            document.getElementById('workoutForm').firstChild.remove();
+        } else {
+            button.innerText = 'NeverMind';
+            const form = document.createElement('form');
+            const br = document.createElement('br');
+
+            const nameField = document.createElement('input');
+            nameField.setAttribute('type', 'text');
+            nameField.setAttribute('name', 'name');
+
+            const submitButton = document.createElement('input');
+            submitButton.setAttribute('type', 'submit');
+            submitButton.setAttribute('value', 'Create Workout');
+
+            p.appendChild(form);
+            form.appendChild(nameField);
+            form.appendChild(br);
+            form.appendChild(submitButton);
+        }
+
     })
