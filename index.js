@@ -52,7 +52,21 @@ fetch(exerciseEndPoint)
                 element.relationships.exercises.data.forEach(catEx => {
                     const exercise = obj.data.find(ex => catEx.id === ex.id);
                     const li = document.createElement('li');
-                    li.innerText = exercise.attributes.name + '      ' + exercise.attributes.video_url;
+                    li.innerText = exercise.attributes.name;
+                    li.addEventListener('click', () => {
+                        if (li.childElementCount) {
+                            li.children[0].remove();
+                        } else {
+                            const div = document.createElement('div');
+                            const frame = document.createElement('iframe');
+                            frame.src = exercise.attributes.video_url;
+                            frame.width = '360';
+                            frame.height = '215';
+                            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                            div.appendChild(frame);
+                            li.appendChild(div);
+                        }
+                    })
                     ul.appendChild(li);
                 })
                 div.appendChild(ul);
@@ -64,7 +78,21 @@ fetch(exerciseEndPoint)
                 element.relationships.exercises.data.forEach(woEx => {
                     const exercise = obj.data.find(ex => woEx.id === ex.id);
                     const li = document.createElement('li');
-                    li.innerText = exercise.attributes.name + '      ' + exercise.attributes.video_url;
+                    li.innerText = exercise.attributes.name;
+                    li.addEventListener('click', () => {
+                        if (li.childElementCount) {
+                            li.children[0].remove();
+                        } else {
+                            const div = document.createElement('div');
+                            const frame = document.createElement('iframe');
+                            frame.src = exercise.attributes.video_url;
+                            frame.width = '360';
+                            frame.height = '215';
+                            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                            div.appendChild(frame);
+                            li.appendChild(div);
+                        }
+                    })
                     ul.appendChild(li);
                 })
                 div.appendChild(ul);
