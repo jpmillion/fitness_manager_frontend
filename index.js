@@ -17,6 +17,7 @@ fetch(exerciseEndPoint)
                 element.relationships.exercises.data.forEach(catEx => {
                     const exercise = obj.data.find(ex => catEx.id === ex.id);
                     const li = document.createElement('li');
+                    li.classList.add('exercises');
                     li.innerText = exercise.attributes.name;
                     li.addEventListener('click', () => {
                         if (li.childElementCount) {
@@ -70,13 +71,15 @@ fetch(exerciseEndPoint)
     button.addEventListener('click', () => {
         const p = document.getElementById('workoutForm');
         if (p.childElementCount) {
-            button.innerText = 'Create a Workout';
+            button.innerText = 'Create A Workout';
             document.getElementById('workoutForm').firstChild.remove();
         } else {
             button.innerText = 'NeverMind';
             const form = document.createElement('form');
             const br = document.createElement('br');
 
+            const labelName = document.createElement('label');
+            labelName.innerText = 'Workout Name';
             const nameField = document.createElement('input');
             nameField.setAttribute('type', 'text');
             nameField.setAttribute('name', 'name');
@@ -86,8 +89,25 @@ fetch(exerciseEndPoint)
             submitButton.setAttribute('value', 'Create Workout');
 
             p.appendChild(form);
-            form.appendChild(nameField);
+            form.appendChild(labelName);
             form.appendChild(br);
+            form.appendChild(nameField);
+            form.appendChild(document.createElement('br'));
+
+            const categories = document.getElementById('categories');
+            for (const category of categories.children) {
+                const button = document.createElement('button');
+                button.innerText = category.id;
+                form.appendChild(button);
+            }
+
+            const exercises = document.getElementsByClassName('exercises');
+            for (const exercise of exercises) {
+                const checkBox = document.createElement('input');
+                checkBox.setAttribute('type', 'checkbox');
+                exercise.appendChild(checkBox);
+            }
+            form.appendChild(document.createElement('br'));
             form.appendChild(submitButton);
         }
 
