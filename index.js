@@ -205,3 +205,147 @@ function deleteWorkoutFetch(name) {
     .then(mess => window.alert(mess))
 }
 
+fetch(exerciseEndPoint)
+    .then(resp => resp.json())
+    .then(obj => {
+        obj.included.forEach(element => {
+            const categoryDiv = document.getElementById('categories');
+            const workoutDiv = document.getElementById('workouts');
+            const ul = document.createElement('ul');
+            if (element.type === 'category') {
+                const {name, description} = element.attributes;
+                const div = document.createElement('div');
+                div.classList.add('col');
+                div.id = name;
+                div.innerHTML = `${name} <div>${description}</div>`;
+                element.relationships.exercises.data.forEach(catEx => {
+                    const exercise = obj.data.find(ex => catEx.id === ex.id);
+                    const li = document.createElement('li');
+                    li.classList.add('exercises');
+                    li.innerText = exercise.attributes.name;
+                    li.addEventListener('click', () => {
+                        if (li.childElementCount) {
+                            li.children[0].remove();
+                        } else {
+                            const div = document.createElement('div');
+                            const frame = document.createElement('iframe');
+                            frame.src = exercise.attributes.video_url;
+                            frame.width = '360';
+                            frame.height = '215';
+                            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                            div.appendChild(frame);
+                            li.appendChild(div);
+                        }
+                    })
+                    ul.appendChild(li);
+                })
+                div.appendChild(ul);
+                categoryDiv.appendChild(div);
+            } else {
+                const div = document.createElement('div');
+                div.classList.add('col-md-auto');
+                div.innerHTML = `<h5>${element.attributes.name}</h5>`;
+                const button = document.createElement('button');
+                button.classList.add('deleteWorkout');
+                button.innerText = 'Delete Workout';
+                button.addEventListener('click', deleteWorkout);
+                div.appendChild(button);
+                element.relationships.exercises.data.forEach(woEx => {
+                    const exercise = obj.data.find(ex => woEx.id === ex.id);
+                    const li = document.createElement('li');
+                    li.innerText = exercise.attributes.name;
+                    li.addEventListener('click', () => {
+                        if (li.childElementCount) {
+                            li.children[0].remove();
+                        } else {
+                            const div = document.createElement('div');
+                            const frame = document.createElement('iframe');
+                            frame.src = exercise.attributes.video_url;
+                            frame.width = '360';
+                            frame.height = '215';
+                            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                            div.appendChild(frame);
+                            li.appendChild(div);
+                        }
+                    })
+                    ul.appendChild(li);
+                })
+                div.appendChild(ul);
+                workoutDiv.appendChild(div);
+            }
+        });   
+    })
+
+    function getExercisesAndRelationships(obj) {
+        obj.included.forEach(element => {
+            const categoryDiv = document.getElementById('categories');
+            const workoutDiv = document.getElementById('workouts');
+            const ul = document.createElement('ul');
+            if (element.type === 'category') {
+                displayCategories(obj, element, ul, categoryDiv);
+            } else {
+                displayWorkouts(element, obj, ul, workoutDiv);
+            }
+        })
+    }
+
+    function displayCategories(obj, category, ul, catDiv) {
+        const {name, description} = category.attributes;
+        const div = document.createElement('div');
+        div.classList.add('col');
+        div.id = name;
+        div.innerHTML = `${name} <div>${description}</div>`;
+        displayCategoryExercises(obj, category, ul, div);
+        catDiv.appendChild(div);
+    }
+
+    function displayCategoryExercises(obj, category, ul, div) {
+        category.relationships.exercises.data.forEach(catEx => {
+            const exercise = obj.data.find(ex => catEx.id === ex.id);
+            const li = document.createElement('li');
+            li.classList.add('exercises');
+            li.innerText = exercise.attributes.name;
+            li.addEventListener('click', displayExerciseVideo);
+            ul.appendChild(li);
+            div.appendChild(ul);
+        })
+    }
+
+    function displayExerciseVideo() {
+        if (this.childElementCount) {
+            this.children[0].remove();
+        } else {
+            const div = document.createElement('div');
+            const frame = document.createElement('iframe');
+            frame.src = exercise.attributes.video_url;
+            frame.width = '360';
+            frame.height = '215';
+            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            div.appendChild(frame);
+            this.appendChild(div);
+        }
+    }
+
+    function displayWorkouts(workout, obj, ul, woDiv) {
+        const div = document.createElement('div');
+        div.classList.add('col-md-auto');
+        div.innerHTML = `<h5>${workout.attributes.name}</h5>`;
+        const button = document.createElement('button');
+        button.classList.add('deleteWorkout');
+        button.innerText = 'Delete Workout';
+        button.addEventListener('click', deleteWorkout);
+        div.appendChild(button);
+        displayWorkoutExercises(workout, obj, ul, div);
+        woDiv.appendChild(div);
+    }
+
+    function displayWorkoutExercises(workout, obj, ul, div) {
+        workout.relationships.exercises.data.forEach(woEx => {
+            const exercise = obj.data.find(ex => woEx.id === ex.id);
+            const li = document.createElement('li');
+            li.innerText = exercise.attributes.name;
+            li.addEventListener('click', displayExerciseVideo);
+            ul.appendChild(li);
+            div.appendChild(ul);
+        })
+    }
