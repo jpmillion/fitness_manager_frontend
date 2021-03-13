@@ -76,67 +76,67 @@ fetch(exerciseEndPoint)
     .then(resp => resp.json())
     .then(obj => getExercisesAndRelationships(obj))
 
-const button = document.getElementById('createWorkout');
-button.addEventListener('click', () => {
-    const div = document.getElementById('workoutForm');
-    if (div.childElementCount) {
-        button.innerText = 'Create A Workout';
-        document.getElementById('workoutForm').firstChild.remove();
-    } else {
-        button.innerText = 'NeverMind';
-        const form = document.createElement('form');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            postWorkoutFormData();
-            form.remove();
-            button.innerText = 'Create A Workout';
-        })
-        const br = document.createElement('br');
-        const labelName = document.createElement('label');
-        labelName.innerText = 'Workout Name';
-        const nameField = document.createElement('input');
-        nameField.setAttribute('type', 'text');
-        nameField.setAttribute('name', 'name');
-        const catDiv = document.createElement('div');
-        catDiv.classList.add('row');
-        catDiv.classList.add('justify-content-md-center')
-        const submitButton = document.createElement('input');
-        submitButton.setAttribute('type', 'submit');
-        submitButton.setAttribute('value', 'Create Workout');
-        div.appendChild(form);
-        form.appendChild(labelName);
-        form.appendChild(br);
-        form.appendChild(nameField);
-        form.appendChild(document.createElement('br'));
-        form.appendChild(catDiv);
-        const categories = document.getElementById('categories');
-        for (const category of categories.children) {
-            const div = document.createElement('div');
-            div.classList.add('col-md-auto');
-            div.id = `${category.id}Selection`;
-            const h5 = document.createElement('h5');
-            h5.innerText = `${category.id}`;
-            div.appendChild(h5);
-            catDiv.appendChild(div);
-        }
-        const exercises = document.getElementsByClassName('exercises');
-        for (const exercise of exercises) {
-            const div = document.getElementById(`${exercise.parentElement.parentElement.id}Selection`);
-            const checkBox = document.createElement('input');
-            checkBox.setAttribute('type', 'checkbox');
-            checkBox.id = exercise.innerHTML;
-            checkBox.value = exercise.innerHTML;
-            const label = document.createElement('label');
-            label.setAttribute('for', exercise.innerHTML);
-            label.innerText = exercise.innerHTML;
-            div.appendChild(checkBox);
-            div.appendChild(label);
-            div.appendChild(document.createElement('br'));
-        }
-        form.appendChild(document.createElement('br'));
-        form.appendChild(submitButton);
-    }
-})
+// const button = document.getElementById('createWorkout');
+// button.addEventListener('click', () => {
+//     const div = document.getElementById('workoutForm');
+//     if (div.childElementCount) {
+//         button.innerText = 'Create A Workout';
+//         document.getElementById('workoutForm').firstChild.remove();
+//     } else {
+//         button.innerText = 'NeverMind';
+//         const form = document.createElement('form');
+//         form.addEventListener('submit', e => {
+//             e.preventDefault();
+//             postWorkoutFormData();
+//             form.remove();
+//             button.innerText = 'Create A Workout';
+//         })
+//         const br = document.createElement('br');
+//         const labelName = document.createElement('label');
+//         labelName.innerText = 'Workout Name';
+//         const nameField = document.createElement('input');
+//         nameField.setAttribute('type', 'text');
+//         nameField.setAttribute('name', 'name');
+//         const catDiv = document.createElement('div');
+//         catDiv.classList.add('row');
+//         catDiv.classList.add('justify-content-md-center')
+//         const submitButton = document.createElement('input');
+//         submitButton.setAttribute('type', 'submit');
+//         submitButton.setAttribute('value', 'Create Workout');
+//         div.appendChild(form);
+//         form.appendChild(labelName);
+//         form.appendChild(br);
+//         form.appendChild(nameField);
+//         form.appendChild(document.createElement('br'));
+//         form.appendChild(catDiv);
+//         const categories = document.getElementById('categories');
+//         for (const category of categories.children) {
+//             const div = document.createElement('div');
+//             div.classList.add('col-md-auto');
+//             div.id = `${category.id}Selection`;
+//             const h5 = document.createElement('h5');
+//             h5.innerText = `${category.id}`;
+//             div.appendChild(h5);
+//             catDiv.appendChild(div);
+//         }
+//         const exercises = document.getElementsByClassName('exercises');
+//         for (const exercise of exercises) {
+//             const div = document.getElementById(`${exercise.parentElement.parentElement.id}Selection`);
+//             const checkBox = document.createElement('input');
+//             checkBox.setAttribute('type', 'checkbox');
+//             checkBox.id = exercise.innerHTML;
+//             checkBox.value = exercise.innerHTML;
+//             const label = document.createElement('label');
+//             label.setAttribute('for', exercise.innerHTML);
+//             label.innerText = exercise.innerHTML;
+//             div.appendChild(checkBox);
+//             div.appendChild(label);
+//             div.appendChild(document.createElement('br'));
+//         }
+//         form.appendChild(document.createElement('br'));
+//         form.appendChild(submitButton);
+//     }
+// })
 
 function postWorkoutFormData() {
     const name = document.querySelector('input[type=text]').value
@@ -209,8 +209,6 @@ function deleteWorkoutFetch(name) {
     .then(mess => window.alert(mess))
 }
 
-// putting code into functions
-
 function getExercisesAndRelationships(obj) {
     obj.included.forEach(element => {
         const categoryDiv = document.getElementById('categories');
@@ -273,3 +271,156 @@ function displayExercises(element, obj, ul, div) {
         div.appendChild(ul);
     })
 }
+
+// putting code into functions
+
+const button = document.getElementById('createWorkout');
+button.addEventListener('click', () => {
+    const div = document.getElementById('workoutForm');
+    if (div.childElementCount) {
+        button.innerText = 'Create A Workout';
+        document.getElementById('workoutForm').firstChild.remove();
+    } else {
+        button.innerText = 'NeverMind';
+        const form = document.createElement('form');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            postWorkoutFormData();
+            form.remove();
+            button.innerText = 'Create A Workout';
+        })
+        const br = document.createElement('br');
+        const labelName = document.createElement('label');
+        labelName.innerText = 'Workout Name';
+        const nameField = document.createElement('input');
+        nameField.setAttribute('type', 'text');
+        nameField.setAttribute('name', 'name');
+        const catDiv = document.createElement('div');
+        catDiv.classList.add('row');
+        catDiv.classList.add('justify-content-md-center')
+        const submitButton = document.createElement('input');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.setAttribute('value', 'Create Workout');
+        div.appendChild(form);
+        form.appendChild(labelName);
+        form.appendChild(br);
+        form.appendChild(nameField);
+        form.appendChild(document.createElement('br'));
+        form.appendChild(catDiv);
+        const categories = document.getElementById('categories');
+        for (const category of categories.children) {
+            const div = document.createElement('div');
+            div.classList.add('col-md-auto');
+            div.id = `${category.id}Selection`;
+            const h5 = document.createElement('h5');
+            h5.innerText = `${category.id}`;
+            div.appendChild(h5);
+            catDiv.appendChild(div);
+        }
+        const exercises = document.getElementsByClassName('exercises');
+        for (const exercise of exercises) {
+            const div = document.getElementById(`${exercise.parentElement.parentElement.id}Selection`);
+            const checkBox = document.createElement('input');
+            checkBox.setAttribute('type', 'checkbox');
+            checkBox.id = exercise.innerHTML;
+            checkBox.value = exercise.innerHTML;
+            const label = document.createElement('label');
+            label.setAttribute('for', exercise.innerHTML);
+            label.innerText = exercise.innerHTML;
+            div.appendChild(checkBox);
+            div.appendChild(label);
+            div.appendChild(document.createElement('br'));
+        }
+        form.appendChild(document.createElement('br'));
+        form.appendChild(submitButton);
+    }
+})
+
+function createWorkoutForm() {
+    const button = document.getElementById('createWorkout');
+    button.addEventListener('click', displayWorkoutForm);
+}
+
+function displayWorkoutForm() {
+    const div = document.getElementById('workoutForm');
+    if (div.childElementCount) {
+        hideWorkoutForm(this);
+    } else {
+        showWorkoutForm(this);
+    }
+}
+
+function hideWorkoutForm(button) {
+    button.innerText = 'Create A Workout';
+    document.getElementById('workoutForm').firstChild.remove();
+}
+
+function showWorkoutForm(button) {
+    button.innerText = 'NeverMind';
+    const form = document.createElement('form');
+    form.addEventListener('submit', e => submitWorkoutForm(e));
+    createWorkoutFormElements(form);
+}
+
+function submitWorkoutForm(e) {
+    e.preventDefault();
+    postWorkoutFormData();
+    this.remove();
+    button.innerText = 'Create A Workout';
+}
+
+function createWorkoutFormElements(form) {
+    const labelName = document.createElement('label');
+    labelName.innerText = 'Workout Name';
+    const nameField = document.createElement('input');
+    nameField.setAttribute('type', 'text');
+    nameField.setAttribute('name', 'name');
+    const catDiv = document.createElement('div');
+    catDiv.classList.add('row');
+    catDiv.classList.add('justify-content-md-center')
+    const submitButton = document.createElement('input');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.setAttribute('value', 'Create Workout');
+    div.appendChild(form);
+    form.appendChild(labelName);
+    form.appendChild(document.createElement('br'));
+    form.appendChild(nameField);
+    form.appendChild(document.createElement('br'));
+    form.appendChild(catDiv);
+    createCategoryElementsForWorkoutForm(catDiv);
+    createExerciseElementsForWorkoutForm();
+    form.appendChild(document.createElement('br'));
+    form.appendChild(submitButton);
+}
+
+function createCategoryElementsForWorkoutForm(catDiv) {
+    const categories = document.getElementById('categories');
+    for (const category of categories.children) {
+        const div = document.createElement('div');
+        div.classList.add('col-md-auto');
+        div.id = `${category.id}Selection`;
+        const h5 = document.createElement('h5');
+        h5.innerText = `${category.id}`;
+        div.appendChild(h5);
+        catDiv.appendChild(div);
+    }
+}
+
+function createExerciseElementsForWorkoutForm() {
+    const exercises = document.getElementsByClassName('exercises');
+    for (const exercise of exercises) {
+        const div = document.getElementById(`${exercise.parentElement.parentElement.id}Selection`);
+        const checkBox = document.createElement('input');
+        checkBox.setAttribute('type', 'checkbox');
+        checkBox.id = exercise.innerHTML;
+        checkBox.value = exercise.innerHTML;
+        const label = document.createElement('label');
+        label.setAttribute('for', exercise.innerHTML);
+        label.innerText = exercise.innerHTML;
+        div.appendChild(checkBox);
+        div.appendChild(label);
+        div.appendChild(document.createElement('br'));
+    }
+}
+
+
