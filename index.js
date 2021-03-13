@@ -205,6 +205,8 @@ function deleteWorkoutFetch(name) {
     .then(mess => window.alert(mess))
 }
 
+// putting code into functions
+
 fetch(exerciseEndPoint)
     .then(resp => resp.json())
     .then(obj => {
@@ -340,9 +342,14 @@ fetch(exerciseEndPoint)
     }
 
     function displayWorkoutExercises(workout, obj, ul, div) {
-        workout.relationships.exercises.data.forEach(woEx => {
-            const exercise = obj.data.find(ex => woEx.id === ex.id);
+        displayExercises(workout, obj, ul, div);
+    }
+
+    function displayExercises(element, obj, ul, div) {
+        element.relationships.exercises.data.forEach(elEx => {
+            const exercise = obj.data.find(ex => elEx.id === ex.id);
             const li = document.createElement('li');
+            li.classList.add(`${element.type}Exercises`);
             li.innerText = exercise.attributes.name;
             li.addEventListener('click', displayExerciseVideo);
             ul.appendChild(li);
