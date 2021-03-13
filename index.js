@@ -78,13 +78,9 @@ fetch(exerciseEndPoint)
             const form = document.createElement('form');
             form.addEventListener('submit', e => {
                 e.preventDefault();
-                const name = document.querySelector('input[type=text]').value
-                const checkedBoxes = document.querySelectorAll('form input:checked');
-                const exercises = [];
-                for (const checkedBox of checkedBoxes) {
-                    exercises.push(checkedBox.value);
-                }
-                debugger
+                postWorkoutFormData();
+                form.remove();
+                button.innerText = 'Create A Workout';
             })
             const br = document.createElement('br');
 
@@ -140,4 +136,55 @@ fetch(exerciseEndPoint)
 
     })
 
+    function postWorkoutFormData() {
+        const name = document.querySelector('input[type=text]').value
+        const checkedBoxes = document.querySelectorAll('form input:checked');
+        const exercises = [];
+        for (const checkedBox of checkedBoxes) {
+            exercises.push(checkedBox.value);
+        }
+        postFetchWorkoutForm(name, exercises);
+    }
+
+    function postFetchWorkoutForm(name, exercises) {
+        fetch(workoutEndPoint, {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                exercises: exercises
+            })
+        })
+        .then(resp => resp.json())
+        .then(workout => {
+            const workoutDiv = document.getElementById('workouts');
+            const ul = document.createElement('ul');
+            const div = document.createElement('div');
+            div.classList.add('col-md-auto');
+            div.innerText = workout.data.attributes.name;
+            workout.included.forEach(woEx => {
+                const li = document.createElement('li');
+                li.innerText = woEx.attributes.name;
+                li.addEventListener('click', () => {
+                    if (li.childElementCount) {
+                        li.children[0].remove();
+                    } else {
+                        const div = document.createElement('div');
+                        const frame = document.createElement('iframe');
+                        frame.src = woEx.attributes.video_url;
+                        frame.width = '360';
+                        frame.height = '215';
+                        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                        div.appendChild(frame);
+                        li.appendChild(div);
+                    }
+                })
+                ul.appendChild(li);
+            })
+            div.appendChild(ul);
+            workoutDiv.appendChild(div);
+        })
+    }
 
