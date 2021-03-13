@@ -76,7 +76,16 @@ fetch(exerciseEndPoint)
         } else {
             button.innerText = 'NeverMind';
             const form = document.createElement('form');
-            form.id = 'createWorkoutForm'
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const name = document.querySelector('input[type=text]').value
+                const checkedBoxes = document.querySelectorAll('form input:checked');
+                const exercises = [];
+                for (const checkedBox of checkedBoxes) {
+                    exercises.push(checkedBox.value);
+                }
+                debugger
+            })
             const br = document.createElement('br');
 
             const labelName = document.createElement('label');
@@ -117,6 +126,7 @@ fetch(exerciseEndPoint)
                 const checkBox = document.createElement('input');
                 checkBox.setAttribute('type', 'checkbox');
                 checkBox.id = exercise.innerHTML;
+                checkBox.value = exercise.innerHTML;
                 const label = document.createElement('label');
                 label.setAttribute('for', exercise.innerHTML);
                 label.innerText = exercise.innerHTML;
@@ -130,7 +140,4 @@ fetch(exerciseEndPoint)
 
     })
 
-    const createWorkoutForm = document.getElementById('createWorkoutForm');
-    createWorkoutForm.addEventListener('submit', e => {
-        
-    })
+
