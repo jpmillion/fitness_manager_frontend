@@ -138,6 +138,8 @@ fetch(exerciseEndPoint)
 //     }
 // })
 
+createWorkoutForm();
+
 function postWorkoutFormData() {
     const name = document.querySelector('input[type=text]').value
     const checkedBoxes = document.querySelectorAll('form input:checked');
@@ -238,7 +240,7 @@ function displayExerciseVideo() {
     } else {
         const div = document.createElement('div');
         const frame = document.createElement('iframe');
-        frame.src = exercise.attributes.video_url;
+        frame.src = this.id;
         frame.width = '360';
         frame.height = '215';
         frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
@@ -266,6 +268,7 @@ function displayExercises(element, obj, ul, div) {
         const li = document.createElement('li');
         li.classList.add(`${element.type}Exercises`);
         li.innerText = exercise.attributes.name;
+        li.id = exercise.attributes.video_url;
         li.addEventListener('click', displayExerciseVideo);
         ul.appendChild(li);
         div.appendChild(ul);
@@ -274,67 +277,6 @@ function displayExercises(element, obj, ul, div) {
 
 // putting code into functions
 
-const button = document.getElementById('createWorkout');
-button.addEventListener('click', () => {
-    const div = document.getElementById('workoutForm');
-    if (div.childElementCount) {
-        button.innerText = 'Create A Workout';
-        document.getElementById('workoutForm').firstChild.remove();
-    } else {
-        button.innerText = 'NeverMind';
-        const form = document.createElement('form');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            postWorkoutFormData();
-            form.remove();
-            button.innerText = 'Create A Workout';
-        })
-        const br = document.createElement('br');
-        const labelName = document.createElement('label');
-        labelName.innerText = 'Workout Name';
-        const nameField = document.createElement('input');
-        nameField.setAttribute('type', 'text');
-        nameField.setAttribute('name', 'name');
-        const catDiv = document.createElement('div');
-        catDiv.classList.add('row');
-        catDiv.classList.add('justify-content-md-center')
-        const submitButton = document.createElement('input');
-        submitButton.setAttribute('type', 'submit');
-        submitButton.setAttribute('value', 'Create Workout');
-        div.appendChild(form);
-        form.appendChild(labelName);
-        form.appendChild(br);
-        form.appendChild(nameField);
-        form.appendChild(document.createElement('br'));
-        form.appendChild(catDiv);
-        const categories = document.getElementById('categories');
-        for (const category of categories.children) {
-            const div = document.createElement('div');
-            div.classList.add('col-md-auto');
-            div.id = `${category.id}Selection`;
-            const h5 = document.createElement('h5');
-            h5.innerText = `${category.id}`;
-            div.appendChild(h5);
-            catDiv.appendChild(div);
-        }
-        const exercises = document.getElementsByClassName('exercises');
-        for (const exercise of exercises) {
-            const div = document.getElementById(`${exercise.parentElement.parentElement.id}Selection`);
-            const checkBox = document.createElement('input');
-            checkBox.setAttribute('type', 'checkbox');
-            checkBox.id = exercise.innerHTML;
-            checkBox.value = exercise.innerHTML;
-            const label = document.createElement('label');
-            label.setAttribute('for', exercise.innerHTML);
-            label.innerText = exercise.innerHTML;
-            div.appendChild(checkBox);
-            div.appendChild(label);
-            div.appendChild(document.createElement('br'));
-        }
-        form.appendChild(document.createElement('br'));
-        form.appendChild(submitButton);
-    }
-})
 
 function createWorkoutForm() {
     const button = document.getElementById('createWorkout');
@@ -370,6 +312,7 @@ function submitWorkoutForm(e) {
 }
 
 function createWorkoutFormElements(form) {
+    const div = document.getElementById('workoutForm');    
     const labelName = document.createElement('label');
     labelName.innerText = 'Workout Name';
     const nameField = document.createElement('input');
@@ -407,7 +350,7 @@ function createCategoryElementsForWorkoutForm(catDiv) {
 }
 
 function createExerciseElementsForWorkoutForm() {
-    const exercises = document.getElementsByClassName('exercises');
+    const exercises = document.getElementsByClassName('categoryExercises');
     for (const exercise of exercises) {
         const div = document.getElementById(`${exercise.parentElement.parentElement.id}Selection`);
         const checkBox = document.createElement('input');
