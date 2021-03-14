@@ -162,34 +162,34 @@ function postFetchWorkoutForm(name, exercises) {
         })
     })
     .then(resp => resp.json())
-    .then(workout => {
-        const workoutDiv = document.getElementById('workouts');
-        const ul = document.createElement('ul');
-        const div = document.createElement('div');
-        div.classList.add('col-md-auto');
-        div.innerText = workout.data.attributes.name;
-        workout.included.forEach(woEx => {
-            const li = document.createElement('li');
-            li.innerText = woEx.attributes.name;
-            li.addEventListener('click', () => {
-                if (li.childElementCount) {
-                    li.children[0].remove();
-                } else {
-                    const div = document.createElement('div');
-                    const frame = document.createElement('iframe');
-                    frame.src = woEx.attributes.video_url;
-                    frame.width = '360';
-                    frame.height = '215';
-                    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                    div.appendChild(frame);
-                    li.appendChild(div);
-                }
-            })
-            ul.appendChild(li);
-        })
-        div.appendChild(ul);
-        workoutDiv.appendChild(div);
-    })
+    .then(workout => renderCreatedWorkout(workout))
+    //     const workoutDiv = document.getElementById('workouts');
+    //     const ul = document.createElement('ul');
+    //     const div = document.createElement('div');
+    //     div.classList.add('col-md-auto');
+    //     div.innerText = workout.data.attributes.name;
+    //     workout.included.forEach(woEx => {
+    //         const li = document.createElement('li');
+    //         li.innerText = woEx.attributes.name;
+    //         li.addEventListener('click', () => {
+    //             if (li.childElementCount) {
+    //                 li.children[0].remove();
+    //             } else {
+    //                 const div = document.createElement('div');
+    //                 const frame = document.createElement('iframe');
+    //                 frame.src = woEx.attributes.video_url;
+    //                 frame.width = '360';
+    //                 frame.height = '215';
+    //                 frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    //                 div.appendChild(frame);
+    //                 li.appendChild(div);
+    //             }
+    //         })
+    //         ul.appendChild(li);
+    //     })
+    //     div.appendChild(ul);
+    //     workoutDiv.appendChild(div);
+    // })
 }
 
 function deleteWorkout() {
@@ -299,9 +299,10 @@ function showWorkoutForm(button) {
 }
 
 function submitWorkoutForm(e) {
+    const workoutFormDiv = document.getElementById('workoutForm');
     e.preventDefault();
     postWorkoutFormData();
-    this.remove();
+    workoutFormDiv.firstChild.remove();
     button.innerText = 'Create A Workout';
 }
 
@@ -358,6 +359,45 @@ function createExerciseElementsForWorkoutForm() {
         div.appendChild(label);
         div.appendChild(document.createElement('br'));
     }
+}
+
+function renderCreatedWorkout(workout) {
+    const workoutDiv = document.getElementById('workouts');
+    const div = document.createElement('div');
+    div.classList.add('col-md-auto');
+    div.innerHTML = `<h5>${workout.data.attributes.name}</h5>`;
+    const button = document.createElement('button');
+    button.classList.add('deleteWorkout');
+    button.innerText = 'Delete Workout';
+    button.addEventListener('click', deleteWorkout);
+    div.appendChild(button);
+    div.appendChild(renderExercisesForCreatedWorkout(workout));
+    workoutDiv.appendChild(div);
+}
+
+function renderExercisesForCreatedWorkout(workout) {
+    const ul = document.createElement('ul');
+    workout.included.forEach(woEx => {
+        const video_url = woEx.attributes.video_url;
+        const li = document.createElement('li');
+        li.innerText = woEx.attributes.name;
+        li.addEventListener('click', () => {
+            if (li.childElementCount) {
+                li.children[0].remove();
+            } else {
+                const div = document.createElement('div');
+                const frame = document.createElement('iframe');
+                frame.src = video_url;
+                frame.width = '360';
+                frame.height = '215';
+                frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                div.appendChild(frame);
+                li.appendChild(div);
+            }
+        })
+        ul.appendChild(li);
+    })
+    return ul;
 }
 
 
