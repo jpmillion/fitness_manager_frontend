@@ -209,6 +209,9 @@ function deleteWorkoutFetch(name) {
 }
 
 function getExercisesAndRelationships(obj) {
+    obj.data.forEach(exercise => {
+        debugger
+    })
     obj.included.forEach(element => {
         if (element.type === 'category') {
             displayCategories(element, obj);
