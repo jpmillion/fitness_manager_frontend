@@ -192,9 +192,6 @@ function postFetchWorkoutForm(name, exercises) {
     })
 }
 
-
-
-
 function deleteWorkout() {
         const workout = this.parentElement.firstElementChild.innerText;
         deleteWorkoutFetch(workout);
@@ -213,25 +210,23 @@ function deleteWorkoutFetch(name) {
 
 function getExercisesAndRelationships(obj) {
     obj.included.forEach(element => {
-        const categoryDiv = document.getElementById('categories');
-        const workoutDiv = document.getElementById('workouts');
-        const ul = document.createElement('ul');
         if (element.type === 'category') {
-            displayCategories(obj, element, ul, categoryDiv);
+            displayCategories(element, obj);
         } else {
-            displayWorkouts(element, obj, ul, workoutDiv);
+            displayWorkouts(element, obj);
         }
     })
 }
 
-function displayCategories(obj, category, ul, catDiv) {
+function displayCategories(category, obj) {
+    const categoryDiv = document.getElementById('categories');
     const {name, description} = category.attributes;
     const div = document.createElement('div');
     div.classList.add('col');
     div.id = name;
     div.innerHTML = `${name} <div>${description}</div>`;
-    displayExercises(category, obj, ul, div);
-    catDiv.appendChild(div);
+    div.appendChild(displayExercises(category, obj));
+    categoryDiv.appendChild(div);
 }
 
 function displayExerciseVideo() {
@@ -249,7 +244,8 @@ function displayExerciseVideo() {
     }
 }
 
-function displayWorkouts(workout, obj, ul, woDiv) {
+function displayWorkouts(workout, obj) {
+    const workoutDiv = document.getElementById('workouts');
     const div = document.createElement('div');
     div.classList.add('col-md-auto');
     div.innerHTML = `<h5>${workout.attributes.name}</h5>`;
@@ -258,11 +254,12 @@ function displayWorkouts(workout, obj, ul, woDiv) {
     button.innerText = 'Delete Workout';
     button.addEventListener('click', deleteWorkout);
     div.appendChild(button);
-    displayExercises(workout, obj, ul, div);
-    woDiv.appendChild(div);
+    div.appendChild(displayExercises(workout, obj));
+    workoutDiv.appendChild(div);
 }
 
-function displayExercises(element, obj, ul, div) {
+function displayExercises(element, obj) {
+    const ul = document.createElement('ul');
     element.relationships.exercises.data.forEach(elEx => {
         const exercise = obj.data.find(ex => elEx.id === ex.id);
         const li = document.createElement('li');
@@ -271,12 +268,9 @@ function displayExercises(element, obj, ul, div) {
         li.id = exercise.attributes.video_url;
         li.addEventListener('click', displayExerciseVideo);
         ul.appendChild(li);
-        div.appendChild(ul);
     })
+    return ul;
 }
-
-// putting code into functions
-
 
 function createWorkoutForm() {
     const button = document.getElementById('createWorkout');
