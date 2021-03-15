@@ -209,17 +209,21 @@ function deleteWorkoutFetch(name) {
 }
 
 function getExercisesAndRelationships(obj) {
-    obj.data.forEach(exercise => new Exercise(exercise));
-    obj.included.forEach(element => {
-        element.type === 'catgory' ? new Category(element) : new Workout(element);
+    obj.data.forEach(exercise => {
+        debugger
+        // new Exercise(exercise);
     })
-    // obj.included.forEach(element => {
-    //     if (element.type === 'category') {
-    //         displayCategories(element, obj);
-    //     } else {
-    //         displayWorkouts(element, obj);
-    //     }
-    // })
+    obj.included.forEach(element => {
+        debugger
+        // element.type === 'catgory' ? new Category(element) : new Workout(element);
+    })
+    obj.included.forEach(element => {
+        if (element.type === 'category') {
+            displayCategories(element, obj);
+        } else {
+            displayWorkouts(element, obj);
+        }
+    })
 }
 
 function displayCategories(category, obj) {
