@@ -409,10 +409,14 @@ const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
 // }
 
 function getExercisesAndRelationships(json) {
-    obj.included.forEach(element => {
-        element.type === 'catgory' ? new Category(element).render() : new Workout(element).render();
+    json.included.forEach(el => {
+        el.type === 'category' ? new Category(el).renderCategory() : new Workout(el).renderWorkout();
     })
-    obj.data.forEach(exercise => {
-        new Exercise(exercise).render();
-    })
+    // obj.data.forEach(exercise => {
+    //     new Exercise(exercise).render();
+    // })
 }
+
+fetch(exerciseEndPoint)
+    .then(resp => resp.json())
+    .then(json => getExercisesAndRelationships(json))
