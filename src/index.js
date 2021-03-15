@@ -238,18 +238,18 @@ const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
 // }
 
 // function displayExerciseVideo() {
-//     if (this.childElementCount) {
-//         this.children[0].remove();
-//     } else {
-//         const div = document.createElement('div');
-//         const frame = document.createElement('iframe');
-//         frame.src = this.id;
-//         frame.width = '360';
-//         frame.height = '215';
-//         frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-//         div.appendChild(frame);
-//         this.appendChild(div);
-//     }
+    // if (this.childElementCount) {
+    //     this.children[0].remove();
+    // } else {
+    //     const div = document.createElement('div');
+    //     const frame = document.createElement('iframe');
+    //     frame.src = this.id;
+    //     frame.width = '360';
+    //     frame.height = '215';
+    //     frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    //     div.appendChild(frame);
+    //     this.appendChild(div);
+    // }
 // }
 
 // function displayWorkouts(workout, obj) {
