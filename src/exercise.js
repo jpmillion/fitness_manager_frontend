@@ -11,20 +11,18 @@ class Exercise {
     renderExercise() {
         const li = document.createElement('li');
         li.innerText = this.name;
-        li.id = this.videoUrl;
         const div = this.createExerciseVideoDiv();
         li.appendChild(div);
-        li.addEventListener('click', () => div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none'))
-        this.findCategoryListForExercise().appendChild(li);
-        if (this.workout) this.findWorkoutListForExercise().appendChild(li);
-        // ul.appendChild(li);
+        li.addEventListener('click', () => div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none'));
+        this.returnCategoryListForExercise().appendChild(li);
+        if (this.workout) this.returnWorkoutListForExercise().appendChild(li);
     }
 
-    findCategoryListForExercise() {
+    returnCategoryListForExercise() {
         return document.querySelector(`ul[data-category-id='${this.categoryId}']`);
     }
 
-    findWorkoutListForExercise() {
+    returnWorkoutListForExercise() {
         return document.querySelector(`ul[data-workout-id='${this.workout.id}']`)
     }
 
