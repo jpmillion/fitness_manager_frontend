@@ -412,9 +412,9 @@ function getExercisesAndRelationships(json) {
     json.included.forEach(el => {
         el.type === 'category' ? new Category(el).renderCategory() : new Workout(el).renderWorkout();
     })
-    // obj.data.forEach(exercise => {
-    //     new Exercise(exercise).render();
-    // })
+    json.data.forEach(exercise => {
+        new Exercise(exercise).renderExercise();
+    })
 }
 
 fetch(exerciseEndPoint)
