@@ -5,5 +5,8 @@ class Exercise {
         this.videoUrl = exercise.attributes.video_url;
         this.category = category
         this.workout = workout
+        Exercise.all.push(this);
     }
 }
+
+Exercise.all = [];
