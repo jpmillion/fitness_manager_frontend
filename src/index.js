@@ -1,6 +1,5 @@
 const workoutEndPoint = "http://localhost:3000/api/v1/workouts";
 const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
-const exercises = [];
 
 // fetch(exerciseEndPoint)
 //     .then(resp => resp.json())
@@ -210,16 +209,17 @@ function deleteWorkoutFetch(name) {
 }
 
 function getExercisesAndRelationships(obj) {
-    obj.data.forEach((exercise, i) => {
-        exercises.push(new Exercise(exercise, new Category(obj.included.find(cat => cat.id === exercise.relationships.category.data.id))));
-    })
+    obj.data.forEach(exercise => new Exercise(exercise));
     obj.included.forEach(element => {
-        if (element.type === 'category') {
-            displayCategories(element, obj);
-        } else {
-            displayWorkouts(element, obj);
-        }
+        element.type === 'catgory' ? new Category(element) : new Workout(element);
     })
+    // obj.included.forEach(element => {
+    //     if (element.type === 'category') {
+    //         displayCategories(element, obj);
+    //     } else {
+    //         displayWorkouts(element, obj);
+    //     }
+    // })
 }
 
 function displayCategories(category, obj) {
