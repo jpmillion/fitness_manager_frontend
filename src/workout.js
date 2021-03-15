@@ -21,6 +21,32 @@ class Workout {
         // div.appendChild(displayExercises(workout, obj));
         workoutDiv.appendChild(div);
     }
+
+    createWorkoutFormElements() {
+        const workoutFormDiv = document.getElementById('workoutForm');
+        const form = document.createElement('form');    
+        const labelName = document.createElement('label');
+        labelName.innerText = 'Workout Name';
+        const nameField = document.createElement('input');
+        nameField.setAttribute('type', 'text');
+        nameField.setAttribute('name', 'name');
+        const catDiv = document.createElement('div');
+        catDiv.classList.add('row');
+        catDiv.classList.add('justify-content-md-center')
+        const submitButton = document.createElement('input');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.setAttribute('value', 'Create Workout');
+        workoutFormDiv.appendChild(form);
+        form.appendChild(labelName);
+        form.appendChild(document.createElement('br'));
+        form.appendChild(nameField);
+        form.appendChild(document.createElement('br'));
+        form.appendChild(catDiv);
+        createCategoryElementsForWorkoutForm(catDiv);
+        createExerciseElementsForWorkoutForm();
+        form.appendChild(document.createElement('br'));
+        form.appendChild(submitButton);
+    }
 }
 
 Workout.all = [];
