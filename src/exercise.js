@@ -13,9 +13,13 @@ class Exercise {
         li.innerText = this.name;
         const div = this.createExerciseVideoDiv();
         li.appendChild(div);
-        li.addEventListener('click', () => div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none'));
+        li.addEventListener('click', toggle);
         this.returnCategoryListForExercise().appendChild(li);
-        if (this.workout) this.returnWorkoutListForExercise().appendChild(li);
+        if (this.workout) {
+            const clone = li.cloneNode(true);
+            clone.addEventListener('click', toggle);
+            this.returnWorkoutListForExercise().appendChild(clone);
+        }
     }
 
     returnCategoryListForExercise() {
@@ -40,3 +44,8 @@ class Exercise {
 }
 
 Exercise.all = [];
+
+function toggle() {
+    const div = this.firstElementChild;
+    div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none');
+}
