@@ -24,7 +24,8 @@ class Workout {
 
     static createWorkoutFormElements() {
         const workoutFormDiv = document.getElementById('workoutForm');
-        const form = document.createElement('form');    
+        const form = document.createElement('form');
+        form.classList.add('d-none');    
         const labelName = document.createElement('label');
         labelName.innerText = 'Workout Name';
         const nameField = document.createElement('input');
@@ -45,6 +46,20 @@ class Workout {
         // createExerciseElementsForWorkoutForm();
         form.appendChild(document.createElement('br'));
         form.appendChild(submitButton);
+    }
+
+    static toggleWorkoutForm() {
+        const button = document.getElementById('createWorkout');
+        const form = document.querySelector('form');
+        button.addEventListener('click', () => {
+            if (form.className === 'd-none') {
+                this.innerText = 'Nevermind';
+                form.classList.remove('d-none'); 
+            } else {
+                this.innerText = 'Create A Workout';
+                form.classList.add('d-none');
+            }
+        });
     }
 }
 
