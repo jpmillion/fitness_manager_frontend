@@ -420,3 +420,5 @@ function getExercisesAndRelationships(json) {
 fetch(exerciseEndPoint)
     .then(resp => resp.json())
     .then(json => getExercisesAndRelationships(json))
+
+Workout.createWorkoutFormElements();
