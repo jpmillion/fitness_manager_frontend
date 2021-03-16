@@ -422,3 +422,4 @@ fetch(exerciseEndPoint)
     .then(json => getExercisesAndRelationships(json))
 
 Workout.createWorkoutFormElements();
+Workout.toggleWorkoutForm();
