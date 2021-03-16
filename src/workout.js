@@ -22,7 +22,7 @@ class Workout {
         workoutDiv.appendChild(div);
     }
 
-    createWorkoutFormElements() {
+    static createWorkoutFormElements() {
         const workoutFormDiv = document.getElementById('workoutForm');
         const form = document.createElement('form');    
         const labelName = document.createElement('label');
@@ -42,8 +42,7 @@ class Workout {
         form.appendChild(nameField);
         form.appendChild(document.createElement('br'));
         form.appendChild(catDiv);
-        createCategoryElementsForWorkoutForm(catDiv);
-        createExerciseElementsForWorkoutForm();
+        // createExerciseElementsForWorkoutForm();
         form.appendChild(document.createElement('br'));
         form.appendChild(submitButton);
     }
