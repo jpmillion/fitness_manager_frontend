@@ -15,11 +15,24 @@ class Exercise {
         li.appendChild(div);
         li.addEventListener('click', toggle);
         this.returnCategoryListForExercise().appendChild(li);
+        const clone = li.cloneNode(true);
+        clone.addEventListener('click', toggle);
         if (this.workout) {
             const clone = li.cloneNode(true);
             clone.addEventListener('click', toggle);
             this.returnWorkoutListForExercise().appendChild(clone);
-        }
+        }        
+        this.renderExerciseForWorkoutForm(li.cloneNode(true));
+    }
+
+    renderExerciseForWorkoutForm(li) {
+        // li.addEventListener('click', toggle);
+        const checkBox = document.createElement('input');
+        checkBox.setAttribute('type', 'checkbox');
+        checkBox.value = this.name;
+        const ul = document.getElementById(`${this.categoryId}Selection`);
+        li.appendChild(checkBox);
+        ul.appendChild(li);
     }
 
     returnCategoryListForExercise() {
