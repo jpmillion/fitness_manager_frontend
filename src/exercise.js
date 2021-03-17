@@ -26,7 +26,6 @@ class Exercise {
     }
 
     renderExerciseForWorkoutForm(li) {
-        // li.addEventListener('click', toggle);
         const checkBox = document.createElement('input');
         checkBox.setAttribute('type', 'checkbox');
         checkBox.value = this.name;
