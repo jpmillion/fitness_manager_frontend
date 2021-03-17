@@ -23,11 +23,13 @@ class Category {
     createCategoryElementsForWorkoutForm() {
         const catDiv = document.querySelector('form div');
         const div = document.createElement('div');
-        div.classList.add('col-md-auto');
-        div.id = `${this.name}Selection`;
+        div.classList.add('col-4');
+        const ul = document.createElement('ul');
+        ul.id = `${this.id}Selection`;
         const h5 = document.createElement('h5');
         h5.innerText = `${this.name}`;
         div.appendChild(h5);
+        div.appendChild(ul);
         catDiv.appendChild(div);
     }
 }
