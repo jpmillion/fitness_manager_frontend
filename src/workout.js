@@ -22,6 +22,11 @@ class Workout {
         workoutDiv.appendChild(div);
     }
 
+    // postFetchWorkoutData() {
+    //     const form = document.querySelector('form');
+
+    // }
+
     static createWorkoutFormElements() {
         const workoutFormDiv = document.getElementById('workoutForm');
         const form = document.createElement('form');
@@ -43,9 +48,9 @@ class Workout {
         form.appendChild(nameField);
         form.appendChild(document.createElement('br'));
         form.appendChild(catDiv);
-        // createExerciseElementsForWorkoutForm();
         form.appendChild(document.createElement('br'));
         form.appendChild(submitButton);
+        form.addEventListener('submit', e => submitWorkoutForm(e));
     }
 
     static toggleWorkoutForm() {
@@ -61,6 +66,42 @@ class Workout {
             }
         });
     }
+
+    static postWorkoutFormData() {
+        const name = document.querySelector('input[type=text]').value
+        const checkedBoxes = document.querySelectorAll('form input:checked');
+        const exercises = [];
+        for (const checkedBox of checkedBoxes) {
+            exercises.push(checkedBox.value);
+        }
+        this.postFetchWorkoutFormData(name, exercises);
+    }
+
+    static postFetchWorkoutFormData(name, exercises) {
+        fetch(workoutEndPoint, {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                exercises: exercises
+            })
+        })
+            .then(resp => resp.json())
+            .then(workout => {
+                new Workout(workout.data).renderWorkout();
+                workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
+            })
+    }
 }
 
 Workout.all = [];
+
+function submitWorkoutForm(e) {
+    e.preventDefault();
+    const form = document.querySelector('form');
+    form.classList.add('d-none');
+    document.getElementById('createWorkout').innerText = 'Create A Workout';
+    Workout.postWorkoutFormData();
+}
