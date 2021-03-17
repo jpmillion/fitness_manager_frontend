@@ -53,10 +53,10 @@ class Workout {
         const form = document.querySelector('form');
         button.addEventListener('click', () => {
             if (form.className === 'd-none') {
-                this.innerText = 'Nevermind';
+                button.innerText = 'Nevermind';
                 form.classList.remove('d-none'); 
             } else {
-                this.innerText = 'Create A Workout';
+                button.innerText = 'Create A Workout';
                 form.classList.add('d-none');
             }
         });
