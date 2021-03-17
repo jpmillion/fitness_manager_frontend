@@ -9,19 +9,20 @@ class Exercise {
     }
 
     renderExercise() {
-        const li = document.createElement('li');
-        li.innerText = this.name;
-        const div = this.createExerciseVideoDiv();
-        li.appendChild(div);
-        li.addEventListener('click', toggle);
-        this.returnCategoryListForExercise().appendChild(li);
-        const clone = li.cloneNode(true);
-        clone.addEventListener('click', toggle);
+        this.renderExercise4Category();
+        this.renderExercise4Workout();
+    }
+
+    renderExercise4Workout() {
         if (this.workout) {
-            const clone = li.cloneNode(true);
-            clone.addEventListener('click', toggle);
-            this.returnWorkoutListForExercise().appendChild(clone);
-        }        
+            const li = this.exerciseListItem();
+            this.returnWorkoutListForExercise().appendChild(li);
+        }
+    }
+
+    renderExercise4Category() {
+        const li = this.exerciseListItem();
+        this.returnCategoryListForExercise().appendChild(li);       
         this.renderExerciseForWorkoutForm(li.cloneNode(true));
     }
 
@@ -52,6 +53,15 @@ class Exercise {
         frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
         div.appendChild(frame);
         return div;
+    }
+
+    exerciseListItem() {
+        const li = document.createElement('li');
+        li.innerText = this.name;
+        const div = this.createExerciseVideoDiv();
+        li.appendChild(div);
+        li.addEventListener('click', toggle);
+        return li;
     }
 }
 
