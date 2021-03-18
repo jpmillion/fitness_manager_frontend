@@ -4,6 +4,7 @@ const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
 fetch(exerciseEndPoint)
     .then(resp => resp.json())
     .then(json => getExercisesAndRelationships(json))
+    .catch(error => window.alert(error))
 
 Workout.createWorkoutFormElements();
 Workout.toggleWorkoutForm();
