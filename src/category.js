@@ -13,9 +13,7 @@ class Category {
         div.innerHTML = `<h3>${this.name}</h3> <div>${this.description}</div>`;
         const ul = document.createElement('ul');
         ul.dataset.categoryId = this.id;
-        // div.id = name;
         div.appendChild(ul);
-        // div.appendChild(displayExercises(category, obj));
         categoryDiv.appendChild(div);
         this.createCategoryElementsForWorkoutForm();
     }

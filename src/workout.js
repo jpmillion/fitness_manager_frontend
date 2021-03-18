@@ -18,7 +18,6 @@ class Workout {
         ul.dataset.workoutId = this.id;
         div.appendChild(button);
         div.appendChild(ul);
-        // div.appendChild(displayExercises(workout, obj));
         workoutDiv.appendChild(div);
     }
 
