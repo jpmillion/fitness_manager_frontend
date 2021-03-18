@@ -98,6 +98,7 @@ function submitWorkoutForm(e) {
     form.classList.add('d-none');
     document.getElementById('createWorkout').innerText = 'Create A Workout';
     Workout.postWorkoutFormData();
+    form.reset();
 }
 
 function deleteWorkout() {
