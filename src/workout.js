@@ -86,7 +86,9 @@ class Workout {
             .then(workout => {
                 new Workout(workout.data).renderWorkout();
                 workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
+                window.alert('Succesfully Created Workout');
             })
+            .catch(error => window.alert(error));
     }
 }
 
@@ -112,4 +114,5 @@ function deleteWorkout() {
     })
         .then(resp => resp.text())
         .then(mess => window.alert(mess))
+        .catch(error => window.alert(error))
 }
