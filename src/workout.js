@@ -13,7 +13,7 @@ class Workout {
         const button = document.createElement('button');
         button.classList.add('deleteWorkout');
         button.innerText = 'Delete Workout';
-        // button.addEventListener('click', deleteWorkout);
+        button.addEventListener('click', deleteWorkout);
         const ul = document.createElement('ul');
         ul.dataset.workoutId = this.id;
         div.appendChild(button);
@@ -21,11 +21,6 @@ class Workout {
         // div.appendChild(displayExercises(workout, obj));
         workoutDiv.appendChild(div);
     }
-
-    // postFetchWorkoutData() {
-    //     const form = document.querySelector('form');
-
-    // }
 
     static createWorkoutFormElements() {
         const workoutFormDiv = document.getElementById('workoutForm');
@@ -104,4 +99,17 @@ function submitWorkoutForm(e) {
     form.classList.add('d-none');
     document.getElementById('createWorkout').innerText = 'Create A Workout';
     Workout.postWorkoutFormData();
+}
+
+function deleteWorkout() {
+    const id = this.parentElement.querySelector('ul').dataset.workoutId;
+    const name = this.parentElement.querySelector('h5').innerText;
+    this.parentElement.remove();
+    fetch(`${workoutEndPoint}/${name}`, {
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name })
+    })
+        .then(resp => resp.text())
+        .then(mess => window.alert(mess))
 }
