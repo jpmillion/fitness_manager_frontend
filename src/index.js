@@ -1,5 +1,6 @@
 const workoutEndPoint = "http://localhost:3000/api/v1/workouts";
 const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
+const athleteEndPoint = "http://localhost:3000/api/v1/athletes"
 
 fetch(exerciseEndPoint)
     .then(resp => resp.json())
