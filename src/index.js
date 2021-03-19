@@ -7,6 +7,7 @@ fetch(exerciseEndPoint)
     .then(json => getExercisesAndRelationships(json))
     .catch(error => window.alert(error))
 
+listen4Login();
 Workout.createWorkoutFormElements();
 Workout.toggleWorkoutForm();
 
@@ -19,4 +20,9 @@ function getExercisesAndRelationships(json) {
         //new Exercise(exercise).renderExercise();
         new Exercise(exercise).renderExercise4Category();
     })
+}
+
+function listen4Login() {
+    const button = document.getElementById('loginButton');
+    button.addEventListener('click', getAthlete);
 }
