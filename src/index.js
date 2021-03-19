@@ -24,5 +24,20 @@ function getExercisesAndRelationships(json) {
 
 function listen4Login() {
     const button = document.getElementById('loginButton');
-    button.addEventListener('click', getAthlete);
+    button.addEventListener('click', getAthleteAndWorkout);
+}
+
+async function getAthleteAndWorkout() {
+    document.getElementById('athleteLogin').classList.add('d-none');
+    document.getElementById('athleteName').classList.remove('d-none');
+    document.getElementById('athleteWorkout').classList.remove('d-none');
+    const id = document.getElementById('login').value;
+    const resp = await fetch(`${athleteEndPoint}/${id}`);
+    const json = await resp.json();
+    new Athlete(json.data).renderAthlete();
+    json.included.forEach(athleteWorkout => {
+        new Workout(athleteWorkout).renderWorkout();
+        const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
+        exercises.forEach(ex => ex.renderExercise4Workout());
+    })
 }
