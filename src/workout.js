@@ -84,11 +84,15 @@ class Workout {
         })
             .then(resp => resp.json())
             .then(workout => {
-                new Workout(workout.data).renderWorkout();
-                workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
-                window.alert('Succesfully Created Workout');
+                if (workout.errors) {
+                    window.alert(workout.errors);
+                } else {
+                    new Workout(workout.data).renderWorkout();
+                    workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
+                    window.alert('Succesfully Created Workout');
+                }
             })
-            .catch(error => window.alert(error));
+            .catch(error => window.alert(error.message))
     }
 }
 
@@ -107,7 +111,7 @@ function deleteWorkout() {
     const id = this.parentElement.querySelector('ul').dataset.workoutId;
     const name = this.parentElement.querySelector('h5').innerText;
     this.parentElement.remove();
-    fetch(`${workoutEndPoint}/${name}`, {
+    fetch(`${workoutEndPoint}/${id}`, {
         method: 'delete',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
