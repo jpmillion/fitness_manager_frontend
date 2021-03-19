@@ -8,6 +8,7 @@ fetch(exerciseEndPoint)
     .catch(error => window.alert(error))
 
 listen4Login();
+listen4Register();
 Workout.createWorkoutFormElements();
 Workout.toggleWorkoutForm();
 
@@ -27,10 +28,13 @@ function listen4Login() {
     button.addEventListener('click', getAthleteAndWorkout);
 }
 
+function listen4Register() {
+    const button = document.getElementById('registerButton');
+    button.addEventListener('click', registerAthlete);
+}
+
 async function getAthleteAndWorkout() {
-    document.getElementById('athleteLogin').classList.add('d-none');
-    document.getElementById('athleteName').classList.remove('d-none');
-    document.getElementById('athleteWorkout').classList.remove('d-none');
+    displayAthleteDivs();
     const id = document.getElementById('login').value;
     const resp = await fetch(`${athleteEndPoint}/${id}`);
     const json = await resp.json();
@@ -41,3 +45,4 @@ async function getAthleteAndWorkout() {
         exercises.forEach(ex => ex.renderExercise4Workout());
     })
 }
+
