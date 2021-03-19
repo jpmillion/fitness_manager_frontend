@@ -22,31 +22,47 @@ class Workout {
     }
 
     static createWorkoutFormElements() {
+        const [labelName, nameField] = this.createNameField();
+        const catDiv = this.createCategoryDiv();
+        const submitButton = this.createSubmitButton();
+        this.createWorkoutForm([labelName, nameField, catDiv, submitButton]);
+    }
+
+    static createWorkoutForm(elements) {
         const workoutFormDiv = document.getElementById('workoutForm');
         const form = document.createElement('form');
-        form.classList.add('d-none');    
+        form.classList.add('d-none');
+        form.addEventListener('submit', e => submitWorkoutForm(e));
+        workoutFormDiv.appendChild(form);
+        elements.forEach(el => {
+            form.appendChild(el);
+            form.appendChild(document.createElement('br'));
+        })
+    }
+
+    static createNameField() {
         const labelName = document.createElement('label');
         labelName.innerHTML = '<h6>Workout Name:</h6>';
         const nameField = document.createElement('input');
         nameField.id = 'createdWorkoutName';
         nameField.setAttribute('type', 'text');
         nameField.setAttribute('name', 'name');
+        return [labelName, nameField];
+    }
+
+    static createCategoryDiv() {
         const catDiv = document.createElement('div');
         catDiv.classList.add('row');
-        catDiv.classList.add('justify-content-md-center')
+        catDiv.classList.add('justify-content-md-center');
+        return catDiv;
+    }
+
+    static createSubmitButton() {
         const submitButton = document.createElement('input');
         submitButton.className = 'btn btn-dark';
         submitButton.setAttribute('type', 'submit');
         submitButton.setAttribute('value', 'Create Workout');
-        workoutFormDiv.appendChild(form);
-        form.appendChild(labelName);
-        form.appendChild(document.createElement('br'));
-        form.appendChild(nameField);
-        form.appendChild(document.createElement('br'));
-        form.appendChild(catDiv);
-        form.appendChild(document.createElement('br'));
-        form.appendChild(submitButton);
-        form.addEventListener('submit', e => submitWorkoutForm(e));
+        return submitButton;
     }
 
     static toggleWorkoutForm() {
