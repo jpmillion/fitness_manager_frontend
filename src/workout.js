@@ -11,7 +11,7 @@ class Workout {
         div.classList.add('col-md-auto');
         div.innerHTML = `<h5>${this.name}</h5>`;
         const button = document.createElement('button');
-        button.classList.add('deleteWorkout');
+        button.className = 'deleteWorkout btn btn-dark';
         button.innerText = 'Delete Workout';
         button.addEventListener('click', deleteWorkout);
         const ul = document.createElement('ul');
@@ -26,14 +26,16 @@ class Workout {
         const form = document.createElement('form');
         form.classList.add('d-none');    
         const labelName = document.createElement('label');
-        labelName.innerText = 'Workout Name';
+        labelName.innerHTML = '<h6>Workout Name:</h6>';
         const nameField = document.createElement('input');
+        nameField.id = 'createdWorkoutName';
         nameField.setAttribute('type', 'text');
         nameField.setAttribute('name', 'name');
         const catDiv = document.createElement('div');
         catDiv.classList.add('row');
         catDiv.classList.add('justify-content-md-center')
         const submitButton = document.createElement('input');
+        submitButton.className = 'btn btn-dark';
         submitButton.setAttribute('type', 'submit');
         submitButton.setAttribute('value', 'Create Workout');
         workoutFormDiv.appendChild(form);
@@ -62,16 +64,16 @@ class Workout {
     }
 
     static postWorkoutFormData() {
-        const name = document.querySelector('input[type=text]').value
+        const name = document.getElementById('createdWorkoutName').value
         const checkedBoxes = document.querySelectorAll('form input:checked');
         const exercises = [];
         for (const checkedBox of checkedBoxes) {
             exercises.push(checkedBox.value);
         }
-        this.postFetchWorkoutFormData(name, exercises);
+        this.postFetchWorkoutFormData(name, exercises, Athlete.all[0].id);
     }
 
-    static postFetchWorkoutFormData(name, exercises) {
+    static postFetchWorkoutFormData(name, exercises, athleteID) {
         fetch(workoutEndPoint, {
             method: 'post',
             headers: {
@@ -79,7 +81,8 @@ class Workout {
             },
             body: JSON.stringify({
                 name: name,
-                exercises: exercises
+                exercises: exercises,
+                athlete_id: athleteID
             })
         })
             .then(resp => resp.json())
