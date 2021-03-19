@@ -11,9 +11,11 @@ Workout.toggleWorkoutForm();
 
 function getExercisesAndRelationships(json) {
     json.included.forEach(el => {
-        el.type === 'category' ? new Category(el).renderCategory() : new Workout(el).renderWorkout();
+        //el.type === 'category' ? new Category(el).renderCategory() : new Workout(el).renderWorkout();
+        if (el.type === 'category') new Category(el).renderCategory();
     })
     json.data.forEach(exercise => {
-        new Exercise(exercise).renderExercise();
+        //new Exercise(exercise).renderExercise();
+        new Exercise(exercise).renderExercise4Category();
     })
 }
