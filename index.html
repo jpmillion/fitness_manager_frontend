@@ -20,8 +20,13 @@
         <div class="container">
             <div id="categories" class="row jumbotron bg-warning"></div>
         </div>
-        <div class="jumbotron bg-dark text-white text-center"><h1>Your Workouts</h1></div>
-        <div class="container">
+        <div id="athleteLogin" class="container">
+            <div class="text-center">
+                <input type="text" name="name" placeholer="Log in or Register username and press enter">
+            </div>
+        </div>
+        <div id="athleteName" class="jumbotron bg-dark text-white text-center d-none"></div>
+        <div id="athleteWorkout" class="container d-none">
             <div id="workouts" class="row justify-content-md-center jumbotron bg-warning"></div>
             <div id="workoutForm" class="bg-light"></div>
             <div class="text-center"><button id="createWorkout" class="btn btn-dark">Create A Workout</button></div>
