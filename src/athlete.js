@@ -1,7 +1,7 @@
 class Athlete {
     constructor(athlete) {
         this.id = athlete.id;
-        this.name = athlete.name;
+        this.name = athlete.attributes.name;
         Athlete.all.push(this);
     }
 
