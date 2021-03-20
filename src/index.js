@@ -14,11 +14,9 @@ Workout.toggleWorkoutForm();
 
 function getExercisesAndRelationships(json) {
     json.included.forEach(el => {
-        //el.type === 'category' ? new Category(el).renderCategory() : new Workout(el).renderWorkout();
         if (el.type === 'category') new Category(el).renderCategory();
     })
     json.data.forEach(exercise => {
-        //new Exercise(exercise).renderExercise();
         new Exercise(exercise).renderExercise4Category();
     })
 }
@@ -33,16 +31,23 @@ function listen4Register() {
     button.addEventListener('click', registerAthlete);
 }
 
-async function getAthleteAndWorkout() {
-    displayAthleteDivs();
+function getAthleteAndWorkout() {
     const id = document.getElementById('login').value;
-    const resp = await fetch(`${athleteEndPoint}/${id}`);
-    const json = await resp.json();
-    new Athlete(json.data).renderAthlete();
-    json.included.forEach(athleteWorkout => {
-        new Workout(athleteWorkout).renderWorkout();
-        const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
-        exercises.forEach(ex => ex.renderExercise4Workout());
-    })
+    if (!id) return window.alert('Username Required');
+    return fetch(`${athleteEndPoint}/${id}`)
+            .then(resp => resp.json())
+            .then(json => {
+                if (json.errors) {
+                    window.alert(json.errors);
+                } else {
+                    new Athlete(json.data).renderAthlete().displayAthleteDivs();
+                    json.included.forEach(athleteWorkout => {
+                        new Workout(athleteWorkout).renderWorkout();
+                        const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
+                        exercises.forEach(ex => ex.renderExercise4Workout());
+                    })
+                }
+            })
+            .catch(error => window.alert(error))
 }
 
