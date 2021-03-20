@@ -36,18 +36,24 @@ function getAthleteAndWorkout() {
     if (!id) return window.alert('Username Required');
     return fetch(`${athleteEndPoint}/${id}`)
             .then(resp => resp.json())
-            .then(json => {
-                if (json.errors) {
-                    window.alert(json.errors);
-                } else {
-                    new Athlete(json.data).renderAthlete().displayAthleteDivs();
-                    json.included.forEach(athleteWorkout => {
-                        new Workout(athleteWorkout).renderWorkout();
-                        const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
-                        exercises.forEach(ex => ex.renderExercise4Workout());
-                    })
-                }
-            })
+            .then(json => athleteCreation(json))
             .catch(error => window.alert(error))
+}
+
+function athleteCreation(json) {
+    if (json.errors) {
+        window.alert(json.errors);
+    } else {
+        new Athlete(json.data).renderAthlete().displayAthleteDivs();
+        if (json.included) athleteWorkouts(json.included);
+    }
+}
+
+function athleteWorkouts(workouts) {
+    workouts.forEach(athleteWorkout => {
+        new Workout(athleteWorkout).renderWorkout();
+        const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
+        exercises.forEach(ex => ex.renderExercise4Workout());
+    })
 }
 

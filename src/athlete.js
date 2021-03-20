@@ -34,13 +34,7 @@ function registerAthlete() {
             })
            })
             .then(resp => resp.json())
-            .then(json => {
-                if (json.errors) {
-                    window.alert(json.errors);
-                } else {
-                    new Athlete(json.data).renderAthlete().displayAthleteDivs();
-                }
-            })
+            .then(json => athleteCreation(json))
             .catch(error => window.alert(error)) 
 }
 
