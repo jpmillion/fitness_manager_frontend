@@ -9,3 +9,5 @@ simply entering a username.  An athlete must choose between
 and customize demo videos for exercises.  Also being able
 to modify the categories or create new ones.  Secure password
 login and OAuth registration will also be added.
+    This is the link to the repo for fitness_manager_backend:
+        https://github.com/jpmillion/fitness_manager_backend
