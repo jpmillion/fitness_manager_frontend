@@ -13,18 +13,27 @@
         <script type="text/javascript" src="src/exercise.js" async defer></script>
         <script type="text/javascript" src="src/category.js" async defer></script>
         <script type="text/javascript" src="src/workout.js" async defer></script>
+        <script type="text/javascript" src="src/athlete.js" async defer></script>
         <script type="text/javascript" src="src/index.js" async defer></script>
     </head>
     <body class="bg-secondary">
         <div class="jumbotron bg-dark text-white text-center"><h1>Fitness Manager</h1></div>
+        <div id="athleteLogin" class="container">
+            <div class="text-center">
+                <h6>Log In</h6>
+                <input id="login" type="text" name="name" placeholder="Username"><button id='loginButton' class='btn btn-dark'>Log In</button> <br><br>
+                <h6>Or Register</h6>
+                <input id="register" type="text" name="name" placeholder="Username"><button id='registerButton' class='btn btn-dark'>Register</button><br><br>
+            </div>
+        </div>
+        <div id="athleteName" class="jumbotron bg-dark text-white text-center d-none"></div>
+        <div id="athleteWorkout" class="container d-none">
+            <div id="workoutForm" class="bg-warning"></div>
+            <div class="text-center"><button id="createWorkout" class="btn btn-dark">Create A Workout</button></div>
+            <div id="workouts" class="row justify-content-md-center jumbotron bg-warning"></div>
+        </div> 
         <div class="container">
             <div id="categories" class="row jumbotron bg-warning"></div>
-        </div>
-        <div class="jumbotron bg-dark text-white text-center"><h1>Your Workouts</h1></div>
-        <div class="container">
-            <div id="workouts" class="row justify-content-md-center jumbotron bg-warning"></div>
-            <div class="text-center"><button id="createWorkout" class="btn btn-dark">Create A Workout</button></div>
-            <div id="workoutForm" class="bg-light"></div>
-        </div>  
+        </div> 
     </body>
 </html>

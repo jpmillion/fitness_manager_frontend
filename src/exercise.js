@@ -14,10 +14,12 @@ class Exercise {
     }
 
     renderExercise4Workout() {
-        if (this.workout) {
-            const li = this.exerciseListItem();
-            this.returnWorkoutListForExercise().appendChild(li);
-        }
+        // if (this.workout) {
+        //     const li = this.exerciseListItem();
+        //     this.returnWorkoutListForExercise().appendChild(li);
+        // }
+        const li = this.exerciseListItem();
+        this.returnWorkoutListForExercise().appendChild(li);
     }
 
     renderExercise4Category() {
