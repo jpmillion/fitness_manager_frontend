@@ -8,29 +8,39 @@ class Athlete {
     renderAthlete() {
         const div = document.getElementById('athleteName');
         div.innerHTML = `<h1>${this.name}</h1>`;
+        return this
     }
+
+    displayAthleteDivs() {
+        document.getElementById('athleteLogin').classList.add('d-none');
+        document.getElementById('athleteName').classList.remove('d-none');
+        document.getElementById('athleteWorkout').classList.remove('d-none');
+    }
+
 }
 
 Athlete.all = [];
 
-async function registerAthlete() {
-    displayAthleteDivs();
+function registerAthlete() {
     const name = document.getElementById('register').value;
-    const resp = await fetch(athleteEndPoint, {
-        method: 'post',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: name
-        })
-    });
-    const json = await resp.json();
-    new Athlete(json.data).renderAthlete();
+    if (!name) return window.alert('Username Required');
+    return fetch(athleteEndPoint, {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name
+            })
+           })
+            .then(resp => resp.json())
+            .then(json => {
+                if (json.errors) {
+                    window.alert(json.errors);
+                } else {
+                    new Athlete(json.data).renderAthlete().displayAthleteDivs();
+                }
+            })
+            .catch(error => window.alert(error)) 
 }
 
-function displayAthleteDivs() {
-    document.getElementById('athleteLogin').classList.add('d-none');
-    document.getElementById('athleteName').classList.remove('d-none');
-    document.getElementById('athleteWorkout').classList.remove('d-none');
-}
