@@ -1,13 +1,5 @@
-The Fitness Manager application allows athletes to create
-a variety of workouts.  There are categories to seperate
-different types of exercises.  If an exercise is click on
-a video will display with a demostration of the exercise.  
-To create a workout an athlete has to register or login by
-simply entering a username.  An athlete must choose between
-1 and 6 exercises.
-    Future upgrades include being able to create exercises
-and customize demo videos for exercises.  Also being able
-to modify the categories or create new ones.  Secure password
-login and OAuth registration will also be added.
+The Fitness Manager application allows athletes to create a variety of workouts. There are three different categories (Strength, Plyometric, and Speed & Agility) to select from when choosing exercises. Clicking on the name of an exercise will display a video that will demostrate the exercise. Athletes can create as many workouts as they want. Workouts must have between 1 and 6 exercises. An Athlete can log in or register by simply entering a unique username.
+
+Future upgrades include being able to create and update exercises and their attributes such as name and video url. Also, creating and editing categories and their attributes. These upgrades will allow an Athlete to customize there page if the default is not to their liking. Secure login and OAuth will also be added to the application.
     This is the link to the repo for fitness_manager_backend:
         https://github.com/jpmillion/fitness_manager_backend
