@@ -32,7 +32,7 @@ class Workout {
         const workoutFormDiv = document.getElementById('workoutForm');
         const form = document.createElement('form');
         form.classList.add('d-none');
-        form.addEventListener('submit', e => submitWorkoutForm(e));
+        form.addEventListener('submit', e => this.submitForm(e));
         workoutFormDiv.appendChild(form);
         elements.forEach(el => {
             form.appendChild(el);
@@ -113,18 +113,27 @@ class Workout {
             window.alert(error.message);
         }
     }
+
+    static submitForm(e) {
+        e.preventDefault();
+        const form = document.querySelector('form');
+        form.classList.add('d-none');
+        document.getElementById('createWorkout').innerText = 'Create A Workout';
+        Workout.postWorkoutFormData();
+        form.reset();
+    }
 }
 
 Workout.all = [];
 
-function submitWorkoutForm(e) {
-    e.preventDefault();
-    const form = document.querySelector('form');
-    form.classList.add('d-none');
-    document.getElementById('createWorkout').innerText = 'Create A Workout';
-    Workout.postWorkoutFormData();
-    form.reset();
-}
+// function submitWorkoutForm(e) {
+//     e.preventDefault();
+//     const form = document.querySelector('form');
+//     form.classList.add('d-none');
+//     document.getElementById('createWorkout').innerText = 'Create A Workout';
+//     Workout.postWorkoutFormData();
+//     form.reset();
+// }
 
 function deleteWorkout() {
     const id = this.parentElement.querySelector('ul').dataset.workoutId;
