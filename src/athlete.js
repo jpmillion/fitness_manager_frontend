@@ -17,24 +17,39 @@ class Athlete {
         document.getElementById('athleteWorkout').classList.remove('d-none');
     }
 
+    static creation(json) {
+        if (json.errors) {
+            window.alert(json.errors);
+        } else {
+            new Athlete(json.data).renderAthlete().displayAthleteDivs();
+            if (json.included) athleteWorkouts(json.included);
+        }
+    }
+
+    static async register() {
+        const name = document.getElementById('register').value;
+        if (!name) return window.alert('Username Required');
+        try {
+            const resp = await fetch(athleteEndPoint, {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name
+                })
+               });
+            const json =  await resp.json();
+            Athlete.creation(json);
+        } catch (error) {
+            window.alert(error)
+        }
+    }
+
 }
 
 Athlete.all = [];
 
-function registerAthlete() {
-    const name = document.getElementById('register').value;
-    if (!name) return window.alert('Username Required');
-    return fetch(athleteEndPoint, {
-            method: 'post',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name
-            })
-           })
-            .then(resp => resp.json())
-            .then(json => athleteCreation(json))
-            .catch(error => window.alert(error)) 
-}
+ 
+
 

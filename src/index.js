@@ -34,24 +34,18 @@ function listen4Login() {
 
 function listen4Register() {
     const button = document.getElementById('registerButton');
-    button.addEventListener('click', registerAthlete);
+    button.addEventListener('click', Athlete.register);
 }
 
-function getAthleteAndWorkout() {
+async function getAthleteAndWorkout() {
     const id = document.getElementById('login').value;
     if (!id) return window.alert('Username Required');
-    return fetch(`${athleteEndPoint}/${id}`)
-            .then(resp => resp.json())
-            .then(json => athleteCreation(json))
-            .catch(error => window.alert(error))
-}
-
-function athleteCreation(json) {
-    if (json.errors) {
-        window.alert(json.errors);
-    } else {
-        new Athlete(json.data).renderAthlete().displayAthleteDivs();
-        if (json.included) athleteWorkouts(json.included);
+    try {
+        const resp = await fetch(`${athleteEndPoint}/${id}`);
+        const json = await resp.json();
+        Athlete.creation(json);
+    } catch(error) {
+        window.alert(error)
     }
 }
 
