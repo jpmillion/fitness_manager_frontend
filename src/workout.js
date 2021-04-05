@@ -89,28 +89,29 @@ class Workout {
         this.postFetchWorkoutFormData(name, exercises, Athlete.all[0].id);
     }
 
-    static postFetchWorkoutFormData(name, exercises, athleteID) {
-        fetch(workoutEndPoint, {
-            method: 'post',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                exercises: exercises,
-                athlete_id: athleteID
-            })
-        })
-            .then(resp => resp.json())
-            .then(workout => {
-                if (workout.errors) {
-                    window.alert(workout.errors);
-                } else {
-                    new Workout(workout.data).renderWorkout();
-                    workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
-                }
-            })
-            .catch(error => window.alert(error.message))
+    static async postFetchWorkoutFormData(name, exercises, athleteID) {
+        try {
+            const resp = await fetch(workoutEndPoint, {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    exercises: exercises,
+                    athlete_id: athleteID
+                })
+            });
+            const workout = await resp.json();
+            if (workout.errors) {
+            window.alert(workout.errors);
+            } else {
+            new Workout(workout.data).renderWorkout();
+            workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
+            }
+        } catch(error) {
+            window.alert(error.message);
+        }
     }
 }
 
