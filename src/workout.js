@@ -13,7 +13,7 @@ class Workout {
         const button = document.createElement('button');
         button.className = 'deleteWorkout btn btn-dark';
         button.innerText = 'Delete Workout';
-        button.addEventListener('click', deleteWorkout);
+        button.addEventListener('click', Workout.delete);
         const ul = document.createElement('ul');
         ul.dataset.workoutId = this.id;
         div.appendChild(button);
@@ -122,29 +122,24 @@ class Workout {
         Workout.postWorkoutFormData();
         form.reset();
     }
+
+    static async delete() {
+        const id = this.parentElement.querySelector('ul').dataset.workoutId;
+        const name = this.parentElement.querySelector('h5').innerText;
+        this.parentElement.remove();
+        try {
+            const resp = await fetch(`${workoutEndPoint}/${id}`, {
+                                 method: 'delete',
+                                 headers: { 'Content-Type': 'application/json' },
+                                 body: JSON.stringify({ name: name })
+                                });
+            const mess = await resp.text();
+            window.alert(mess);
+        } catch(error) {
+            window.alert(error.message);
+        }
+    }
 }
 
 Workout.all = [];
 
-// function submitWorkoutForm(e) {
-//     e.preventDefault();
-//     const form = document.querySelector('form');
-//     form.classList.add('d-none');
-//     document.getElementById('createWorkout').innerText = 'Create A Workout';
-//     Workout.postWorkoutFormData();
-//     form.reset();
-// }
-
-function deleteWorkout() {
-    const id = this.parentElement.querySelector('ul').dataset.workoutId;
-    const name = this.parentElement.querySelector('h5').innerText;
-    this.parentElement.remove();
-    fetch(`${workoutEndPoint}/${id}`, {
-        method: 'delete',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name })
-    })
-        .then(resp => resp.text())
-        .then(mess => window.alert(mess))
-        .catch(error => window.alert(error))
-}
