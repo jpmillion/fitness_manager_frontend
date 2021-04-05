@@ -58,14 +58,15 @@ class Exercise {
         li.innerText = this.name;
         const div = this.createExerciseVideoDiv();
         li.appendChild(div);
-        li.addEventListener('click', toggle);
+        li.addEventListener('click', Exercise.toggle);
         return li;
+    }
+
+    static toggle() {
+        const div = this.firstElementChild;
+        div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none');
     }
 }
 
 Exercise.all = [];
 
-function toggle() {
-    const div = this.firstElementChild;
-    div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none');
-}
