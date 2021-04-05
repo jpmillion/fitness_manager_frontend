@@ -2,15 +2,21 @@ const workoutEndPoint = "http://localhost:3000/api/v1/workouts";
 const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
 const athleteEndPoint = "http://localhost:3000/api/v1/athletes"
 
-fetch(exerciseEndPoint)
-    .then(resp => resp.json())
-    .then(json => getExercisesAndRelationships(json))
-    .catch(error => window.alert(error))
-
+fetchExercisesAndCategories();
 listen4Login();
 listen4Register();
 Workout.createWorkoutFormElements();
 Workout.toggleWorkoutForm();
+
+async function fetchExercisesAndCategories() {
+    try {
+        const resp = await fetch(exerciseEndPoint);
+        const json = await resp.json();
+        getExercisesAndRelationships(json);
+    } catch (error) {
+        window.alert(error)
+    }
+}
 
 function getExercisesAndRelationships(json) {
     json.included.forEach(el => {
