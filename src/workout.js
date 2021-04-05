@@ -108,7 +108,6 @@ class Workout {
                 } else {
                     new Workout(workout.data).renderWorkout();
                     workout.included.forEach(exercise => new Exercise(exercise).renderExercise4Workout());
-                    window.alert('Succesfully Created Workout');
                 }
             })
             .catch(error => window.alert(error.message))
