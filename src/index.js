@@ -1,10 +1,11 @@
-const workoutEndPoint = "http://localhost:3000/api/v1/workouts";
-const exerciseEndPoint = "http://localhost:3000/api/v1/exercises";
-const athleteEndPoint = "http://localhost:3000/api/v1/athletes"
+const workoutEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/workouts";
+const exerciseEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/exercises";
+const athleteEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/athletes";
 
 fetchExercisesAndCategories();
 listen4Login();
 listen4Register();
+toggleBackgroundColor();
 Workout.createWorkoutFormElements();
 Workout.toggleWorkoutForm();
 
@@ -55,5 +56,21 @@ function athleteWorkouts(workouts) {
         const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
         exercises.forEach(ex => ex.renderExercise4Workout());
     })
+}
+
+function toggleBackgroundColor() {
+    const body = document.querySelector('body');
+    const div = document.getElementById('athleteLogin');
+    const button = document.createElement('button');
+    button.innerText = 'Toggle Dark Mode';
+    button.addEventListener('click', () => {
+        if (body.classList.length === 2) {
+            body.classList.remove('bg-dark');
+            console.log(body);
+        } else {
+            body.classList.add('bg-dark');
+        } 
+    });
+    div.appendChild(button);
 }
 
