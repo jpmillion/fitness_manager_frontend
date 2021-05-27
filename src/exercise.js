@@ -43,10 +43,9 @@ class Exercise {
 
     createExerciseVideoDiv() {
         const div = document.createElement('div');
-        div.classList.add('d-none');
         const frame = document.createElement('iframe');
         frame.src = this.videoUrl;
-        frame.width = '360';
+        frame.width = '275';
         frame.height = '215';
         frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
         div.appendChild(frame);
@@ -57,14 +56,10 @@ class Exercise {
         const li = document.createElement('li');
         li.innerText = this.name;
         const div = this.createExerciseVideoDiv();
-        li.appendChild(div);
-        li.addEventListener('click', Exercise.toggle);
+        li.addEventListener('click', () => {
+            li.firstElementChild ? li.removeChild(li.firstElementChild) : li.appendChild(div);
+        })
         return li;
-    }
-
-    static toggle() {
-        const div = this.firstElementChild;
-        div.className === 'd-none' ? div.classList.remove('d-none') : div.classList.add('d-none');
     }
 }
 
