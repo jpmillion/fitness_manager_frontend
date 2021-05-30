@@ -19,11 +19,19 @@
     <body class="bg-secondary">
         <div class="jumbotron bg-dark text-white text-center"><h1>Fitness Manager</h1></div>
         <div id="athleteLogin" class="container">
-            <div class="text-center">
-                <h6>Log In</h6>
-                <input id="login" type="text" name="name" placeholder="Username"><button id='loginButton' class='btn btn-dark'>Log In</button> <br><br>
-                <h6>Or Register</h6>
-                <input id="register" type="text" name="name" placeholder="Username"><button id='registerButton' class='btn btn-dark'>Register</button><br><br>
+            <div class="row text-center">
+                <div class="col-sm">
+                    <h6>Log In</h6>
+                    <input id="login" type="text" name="name" placeholder="Username"><br>
+                    <input type="password" name="password" placeholder="password"><br>
+                    <button id='loginButton' class='btn btn-dark'>Log In</button> <br><br> 
+                </div>                  
+                <div class='col-sm'>
+                    <h6>Register</h6>
+                    <input id="register" type="text" name="name" placeholder="Username"><br>
+                    <input type="password" name="password" placeholder="password"><br>
+                    <button id='registerButton' class='btn btn-dark'>Register</button><br><br>
+                </div>
             </div>
         </div>
         <div id="athleteName" class="jumbotron bg-dark text-white text-center d-none"></div>
