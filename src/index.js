@@ -1,6 +1,6 @@
 const workoutEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/workouts";
 const exerciseEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/exercises";
-const athleteEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/athletes";
+const athleteEndPoint = "http://localhost:3000/api/v1/athletes";
 
 fetchExercisesAndCategories();
 listen4Login();

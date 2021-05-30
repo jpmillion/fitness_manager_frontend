@@ -21,13 +21,15 @@ class Athlete {
         if (json.errors) {
             window.alert(json.errors);
         } else {
-            new Athlete(json.data).renderAthlete().displayAthleteDivs();
-            if (json.included) athleteWorkouts(json.included);
+            sessionStorage.setItem('token', json.token);
+            new Athlete(json.athlete.data).renderAthlete().displayAthleteDivs();
+            if (json.athlete.included) athleteWorkouts(json.athlete.included);
         }
     }
 
     static async register() {
         const name = document.getElementById('register').value;
+        const password = document.getElementById('regPass').value;
         if (!name) return window.alert('Username Required');
         try {
             const resp = await fetch(athleteEndPoint, {
@@ -36,10 +38,12 @@ class Athlete {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: name
+                    name,
+                    password
                 })
                });
             const json =  await resp.json();
+            console.log(json)
             Athlete.creation(json);
         } catch (error) {
             window.alert(error)
