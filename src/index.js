@@ -1,6 +1,7 @@
-const workoutEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/workouts";
-const exerciseEndPoint = "https://glacial-mesa-45104.herokuapp.com/api/v1/exercises";
-const athleteEndPoint = "http://localhost:3000/api/v1/athletes";
+const workoutEndPoint = "http://localhost:3005/api/v1/workouts";
+const exerciseEndPoint = "http://localhost:3005/api/v1/exercises"; //"https://glacial-mesa-45104.herokuapp.com/api/v1/exercises";
+const athleteEndPoint = "http://localhost:3005/api/v1/athletes";
+const sessionsEndPoint = "http://localhost:3005/api/v1/sessions";
 
 fetchExercisesAndCategories();
 listen4Login();
@@ -30,7 +31,7 @@ function getExercisesAndRelationships(json) {
 
 function listen4Login() {
     const button = document.getElementById('loginButton');
-    button.addEventListener('click', getAthleteAndWorkout);
+    button.addEventListener('click', Athlete.login);
 }
 
 function listen4Register() {

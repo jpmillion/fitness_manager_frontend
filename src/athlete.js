@@ -38,14 +38,37 @@ class Athlete {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name,
-                    password
+                    athlete: {
+                        name,
+                        password
+                    }
                 })
                });
             const json =  await resp.json();
-            console.log(json)
             Athlete.creation(json);
         } catch (error) {
+            window.alert(error)
+        }
+    }
+
+    static async login() {
+        const name = document.getElementById('login').value;
+        const password = document.getElementById('logPass').value;
+        try {
+            const resp = await fetch(sessionsEndPoint, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    password
+                })
+            });
+            const json = await resp.json();
+            console.log(json);
+            Athlete.creation(json);
+        } catch(error) {
             window.alert(error)
         }
     }
@@ -54,6 +77,6 @@ class Athlete {
 
 Athlete.all = [];
 
- 
+
 
 
