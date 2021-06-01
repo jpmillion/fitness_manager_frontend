@@ -15,7 +15,8 @@ class Athlete {
 
     logout = () => {
         sessionStorage.clear();
-        authenticate();
+        toggleDisplay();
+        document.getElementById('workouts').replaceChildren('');
     }
 
     static creation(json) {
@@ -24,7 +25,7 @@ class Athlete {
         } else {
             sessionStorage.setItem('token', json.token);
             new Athlete(json.athlete.data).renderAthlete();
-            authenticate();
+            toggleDisplay();
             if (json.athlete.included) athleteWorkouts(json.athlete.included);
         }
     }
@@ -72,7 +73,7 @@ class Athlete {
                 })
             });
             const json = await resp.json();
-            console.log(json);
+            console.log(json)
             Athlete.creation(json);
         } catch(error) {
             window.alert(error)

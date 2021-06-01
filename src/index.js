@@ -3,7 +3,7 @@ const exerciseEndPoint = "http://localhost:3005/api/v1/exercises"; //"https://gl
 const athleteEndPoint = "http://localhost:3005/api/v1/athletes";
 const sessionsEndPoint = "http://localhost:3005/api/v1/sessions";
 
-authenticate();
+authentication();
 fetchExercisesAndCategories();
 listen4Login();
 listen4Register();
@@ -53,11 +53,15 @@ async function getAthleteAndWorkout() {
 }
 
 function athleteWorkouts(workouts) {
-    workouts.forEach(athleteWorkout => {
-        new Workout(athleteWorkout).renderWorkout();
-        const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
-        exercises.forEach(ex => ex.renderExercise4Workout());
-    })
+    if (workouts.length) {
+        workouts.forEach(athleteWorkout => {
+            new Workout(athleteWorkout).renderWorkout();
+            const exercises = Exercise.all.filter(ex => ex.workout).filter(ex => ex.workout.id === athleteWorkout.id);
+            exercises.forEach(ex => ex.renderExercise4Workout());
+        })
+    } else {
+        document.getElementById('workouts').innerHTML = '<h2>You Have No Workout To View</h2>'
+    }
 }
 
 function toggleBackgroundColor() {
@@ -76,7 +80,19 @@ function toggleBackgroundColor() {
     div.appendChild(button);
 }
 
-function authenticate() {
+async function authentication() {
+    if (sessionStorage.token) {
+        try {
+            const resp = await fetch(`${athleteEndPoint}/authenticate`, { headers: { ...sessionStorage } });
+            const json = await resp.json();
+            Athlete.creation(json);
+        } catch (e) {
+            window.alert(e);
+        }
+    }
+}
+
+function toggleDisplay() {
     if (sessionStorage.token) {
         document.getElementById('athleteLogin').classList.add('d-none');
         document.getElementById('athleteName').classList.remove('d-none');
