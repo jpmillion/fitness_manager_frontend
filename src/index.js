@@ -3,7 +3,7 @@ const exerciseEndPoint = "http://localhost:3005/api/v1/exercises"; //"https://gl
 const athleteEndPoint = "http://localhost:3005/api/v1/athletes";
 const sessionsEndPoint = "http://localhost:3005/api/v1/sessions";
 
-authentication();
+sessionStorage.clear();
 fetchExercisesAndCategories();
 listen4Login();
 listen4Register();
@@ -53,8 +53,9 @@ function athleteWorkouts(workouts) {
 
 async function authentication() {
     if (sessionStorage.token) {
+        const token = { sessionStorage }
         try {
-            const resp = await fetch(`${athleteEndPoint}/authenticate`, { headers: { ...sessionStorage } });
+            const resp = await fetch(`${athleteEndPoint}/authenticate`, { headers: { token } });
             const json = await resp.json();
             Athlete.creation(json);
         } catch (e) {
