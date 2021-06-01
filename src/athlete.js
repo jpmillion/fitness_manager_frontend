@@ -7,14 +7,15 @@ class Athlete {
 
     renderAthlete() {
         const div = document.getElementById('athleteName');
-        div.innerHTML = `<h1>${this.name}</h1>`;
+        div.innerHTML = `<h1>${this.name}</h1><br><button class="btn-dark text-light">LogOut</button>`;
+        const button = document.getElementById('athleteName').querySelector('button');
+        button.addEventListener('click', this.logout);
         return this
     }
 
-    displayAthleteDivs() {
-        document.getElementById('athleteLogin').classList.add('d-none');
-        document.getElementById('athleteName').classList.remove('d-none');
-        document.getElementById('athleteWorkout').classList.remove('d-none');
+    logout = () => {
+        sessionStorage.clear();
+        authenticate();
     }
 
     static creation(json) {
@@ -22,7 +23,8 @@ class Athlete {
             window.alert(json.errors);
         } else {
             sessionStorage.setItem('token', json.token);
-            new Athlete(json.athlete.data).renderAthlete().displayAthleteDivs();
+            new Athlete(json.athlete.data).renderAthlete();
+            authenticate();
             if (json.athlete.included) athleteWorkouts(json.athlete.included);
         }
     }
@@ -76,7 +78,6 @@ class Athlete {
 }
 
 Athlete.all = [];
-
 
 
 

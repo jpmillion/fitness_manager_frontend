@@ -3,6 +3,7 @@ const exerciseEndPoint = "http://localhost:3005/api/v1/exercises"; //"https://gl
 const athleteEndPoint = "http://localhost:3005/api/v1/athletes";
 const sessionsEndPoint = "http://localhost:3005/api/v1/sessions";
 
+authenticate();
 fetchExercisesAndCategories();
 listen4Login();
 listen4Register();
@@ -75,3 +76,14 @@ function toggleBackgroundColor() {
     div.appendChild(button);
 }
 
+function authenticate() {
+    if (sessionStorage.token) {
+        document.getElementById('athleteLogin').classList.add('d-none');
+        document.getElementById('athleteName').classList.remove('d-none');
+        document.getElementById('athleteWorkout').classList.remove('d-none');
+    } else {
+        document.getElementById('athleteLogin').classList.remove('d-none');
+        document.getElementById('athleteName').classList.add('d-none');
+        document.getElementById('athleteWorkout').classList.add('d-none');
+    }
+}
