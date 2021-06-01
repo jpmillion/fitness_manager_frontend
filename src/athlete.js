@@ -32,6 +32,8 @@ class Athlete {
     static async register() {
         const name = document.getElementById('register').value;
         const password = document.getElementById('regPass').value;
+        document.getElementById('register').value = '';
+        document.getElementById('regPass').value = '';
         if (!name) return window.alert('Username Required');
         try {
             const resp = await fetch(athleteEndPoint, {
@@ -56,6 +58,8 @@ class Athlete {
     static async login() {
         const name = document.getElementById('login').value;
         const password = document.getElementById('logPass').value;
+        document.getElementById('login').value = '';
+        document.getElementById('logPass').value = '';
         try {
             const resp = await fetch(sessionsEndPoint, {
                 method: 'POST',
