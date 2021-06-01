@@ -7,7 +7,6 @@ authentication();
 fetchExercisesAndCategories();
 listen4Login();
 listen4Register();
-toggleBackgroundColor();
 Workout.createWorkoutFormElements();
 Workout.toggleWorkoutForm();
 
@@ -50,22 +49,6 @@ function athleteWorkouts(workouts) {
     } else {
         document.getElementById('workouts').innerHTML = '<h2>You Have No Workout To View</h2>'
     }
-}
-
-function toggleBackgroundColor() {
-    const body = document.querySelector('body');
-    const div = document.getElementById('athleteLogin');
-    const button = document.createElement('button');
-    button.innerText = 'Toggle Dark Mode';
-    button.addEventListener('click', () => {
-        if (body.classList.length === 2) {
-            body.classList.remove('bg-dark');
-            console.log(body);
-        } else {
-            body.classList.add('bg-dark');
-        } 
-    });
-    div.appendChild(button);
 }
 
 async function authentication() {
