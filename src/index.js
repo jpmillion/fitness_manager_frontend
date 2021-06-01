@@ -40,18 +40,6 @@ function listen4Register() {
     button.addEventListener('click', Athlete.register);
 }
 
-async function getAthleteAndWorkout() {
-    const id = document.getElementById('login').value;
-    if (!id) return window.alert('Username Required');
-    try {
-        const resp = await fetch(`${athleteEndPoint}/${id}`);
-        const json = await resp.json();
-        Athlete.creation(json);
-    } catch(error) {
-        window.alert(error)
-    }
-}
-
 function athleteWorkouts(workouts) {
     if (workouts.length) {
         workouts.forEach(athleteWorkout => {
