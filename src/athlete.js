@@ -27,6 +27,7 @@ class Athlete {
             new Athlete(json.athlete.data).renderAthlete();
             toggleDisplay();
             if (json.athlete.included) athleteWorkouts(json.athlete.included);
+            else document.getElementById('workouts').innerHTML = '<h2>You Have No Workout To View</h2>';
         }
     }
 
@@ -51,7 +52,6 @@ class Athlete {
                });
             const json =  await resp.json();
             Athlete.creation(json);
-            document.getElementById('workouts').innerHTML = '<h2>You Have No Workout To View</h2>';
         } catch (error) {
             window.alert(error)
         }
