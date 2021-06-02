@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Fitness Manager</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -19,11 +19,19 @@
     <body class="bg-secondary">
         <div class="jumbotron bg-dark text-white text-center"><h1>Fitness Manager</h1></div>
         <div id="athleteLogin" class="container">
-            <div class="text-center">
-                <h6>Log In</h6>
-                <input id="login" type="text" name="name" placeholder="Username"><button id='loginButton' class='btn btn-dark'>Log In</button> <br><br>
-                <h6>Or Register</h6>
-                <input id="register" type="text" name="name" placeholder="Username"><button id='registerButton' class='btn btn-dark'>Register</button><br><br>
+            <div class="row text-center">
+                <div class="col-sm">
+                    <h6>Log In</h6>
+                    <input id="login" type="text" name="name" placeholder="Username"><br>
+                    <input id='logPass' type="password" name="password" placeholder="password"><br>
+                    <button id='loginButton' class='btn btn-dark'>Log In</button> <br><br> 
+                </div>                  
+                <div class='col-sm'>
+                    <h6>Register</h6>
+                    <input id="register" type="text" name="name" placeholder="Username"><br>
+                    <input id='regPass' type="password" name="password" placeholder="password"><br>
+                    <button id='registerButton' class='btn btn-dark'>Register</button><br><br>
+                </div>
             </div>
         </div>
         <div id="athleteName" class="jumbotron bg-dark text-white text-center d-none"></div>
@@ -33,6 +41,7 @@
             <div id="workouts" class="row justify-content-md-center jumbotron bg-warning"></div>
         </div> 
         <div class="container">
+            <h3 class='text-center'>CLICK ON AN EXERCISE TO VIEW DEMO VIDEO</h3>
             <div id="categories" class="row jumbotron bg-warning"></div>
         </div> 
     </body>

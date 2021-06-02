@@ -55,6 +55,13 @@ class Exercise {
     exerciseListItem() {
         const li = document.createElement('li');
         li.innerText = this.name;
+        li.setAttribute('style', 'cursor:pointer')
+        li.addEventListener('mouseover', () => {
+            li.classList.add('text-primary');
+        })
+        li.addEventListener('mouseleave', () => {
+            li.classList.remove('text-primary')
+        })
         const div = this.createExerciseVideoDiv();
         li.addEventListener('click', () => {
             li.firstElementChild ? li.removeChild(li.firstElementChild) : li.appendChild(div);

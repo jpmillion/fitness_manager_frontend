@@ -7,27 +7,34 @@ class Athlete {
 
     renderAthlete() {
         const div = document.getElementById('athleteName');
-        div.innerHTML = `<h1>${this.name}</h1>`;
+        div.innerHTML = `<h1>${this.name}</h1><br><button class="btn-dark text-light">LogOut</button>`;
+        const button = document.getElementById('athleteName').querySelector('button');
+        button.addEventListener('click', this.logout);
         return this
     }
 
-    displayAthleteDivs() {
-        document.getElementById('athleteLogin').classList.add('d-none');
-        document.getElementById('athleteName').classList.remove('d-none');
-        document.getElementById('athleteWorkout').classList.remove('d-none');
+    logout = () => {
+        sessionStorage.clear();
+        toggleDisplay();
+        document.getElementById('workouts').replaceChildren('');
     }
 
     static creation(json) {
         if (json.errors) {
             window.alert(json.errors);
         } else {
-            new Athlete(json.data).renderAthlete().displayAthleteDivs();
-            if (json.included) athleteWorkouts(json.included);
+            sessionStorage.setItem('token', json.token);
+            new Athlete(json.athlete.data).renderAthlete();
+            toggleDisplay();
+            if (json.athlete.included) athleteWorkouts(json.athlete.included);
         }
     }
 
     static async register() {
         const name = document.getElementById('register').value;
+        const password = document.getElementById('regPass').value;
+        document.getElementById('register').value = '';
+        document.getElementById('regPass').value = '';
         if (!name) return window.alert('Username Required');
         try {
             const resp = await fetch(athleteEndPoint, {
@@ -36,12 +43,40 @@ class Athlete {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: name
+                    athlete: {
+                        name,
+                        password
+                    }
                 })
                });
             const json =  await resp.json();
             Athlete.creation(json);
+            document.getElementById('workouts').innerHTML = '<h2>You Have No Workout To View</h2>';
         } catch (error) {
+            window.alert(error)
+        }
+    }
+
+    static async login() {
+        const name = document.getElementById('login').value;
+        const password = document.getElementById('logPass').value;
+        document.getElementById('login').value = '';
+        document.getElementById('logPass').value = '';
+        try {
+            const resp = await fetch(sessionsEndPoint, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    password
+                })
+            });
+            const json = await resp.json();
+            console.log(json)
+            Athlete.creation(json);
+        } catch(error) {
             window.alert(error)
         }
     }
@@ -50,6 +85,5 @@ class Athlete {
 
 Athlete.all = [];
 
- 
 
 
