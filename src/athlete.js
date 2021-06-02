@@ -51,6 +51,7 @@ class Athlete {
                });
             const json =  await resp.json();
             Athlete.creation(json);
+            document.getElementById('workouts').innerHTML = '<h2>You Have No Workout To View</h2>';
         } catch (error) {
             window.alert(error)
         }
