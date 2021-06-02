@@ -7,6 +7,7 @@ class Workout {
 
     renderWorkout() {
         const workoutDiv = document.getElementById('workouts');
+        workoutDiv.firstChild.nodeName === 'H2' && workoutDiv.firstChild.remove('h2');
         const div = document.createElement('div');
         div.classList.add('col-md-auto');
         div.innerHTML = `<h5>${this.name}</h5>`;
